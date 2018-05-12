@@ -1,0 +1,153 @@
+body {
+	/* background: #555; */
+	background: tan;
+	background-image: repeating-linear-gradient(to right,
+		transparent 0,
+		transparent 9px,
+		rgba(255,255,255,0.2) 0,
+		rgba(255,255,255,0.2) 10px,
+		transparent 0,
+		transparent 21px,
+		rgba(255,255,255, 0.5) 0,
+		rgba(255,255,255,0.2) 22px,
+		transparent 0,
+		transparent 33px,
+		rgba(255,255,255,0.2) 0,
+		rgba(255,255,255,0.2) 34px,
+		transparent 0,
+		transparent 60px
+	);
+}
+
+.img-area,
+.swipe-area {
+	padding: 20px;
+	/*iphone dimensions*/
+	width: 188px;
+	height: 251px;
+}
+
+.img-area {
+	position: relative;
+	margin: 1em auto;
+}
+
+
+.swipe-area {
+	margin: -20px;
+	border: 5px dotted rgba(255, 255, 255, 0.4);
+	border-radius: 5px;
+	transition: border-color 0.5s;
+}
+
+.swipe-area--image-is-loaded {
+	border-color: transparent;
+}
+
+.captured-img {
+	display: block;
+	width: 100%;
+	height: auto;
+	opacity: 0;
+	transition: opacity 0.3s;
+}
+
+.swipe-area--image-is-loaded .captured-img {
+	box-shadow: 4px 4px 5px 4px rgba(0,0,0, 0.4);
+	opacity: 1;
+}
+
+.swipe-indicator {
+	position: absolute;
+	display: block;
+	top: 280px;
+	left: 50%;
+	margin-left: -70px;
+	border-radius: 20px;
+	width: 140px;
+	height: auto;
+	pointer-events: none;
+	opacity: 0;
+}
+
+@keyframes indicate-swipe {
+	0% {
+		opacity: 0;
+		transform: translateY(0);
+	}
+	10%,
+	40% {
+		transform: translateY(0);
+		opacity: 1;
+	}
+	60%,
+	100% {
+		transform: translateY(-50px);
+		opacity: 0;
+	}
+}
+
+.swipe-indicator--is-hidden {
+	opacity: 0;
+}
+
+
+.swipe-indicator--is-active {
+	animation: indicate-swipe 2s;
+	animation-timing-function: ease-out;
+	animation-iteration-count: 3;
+}
+
+.swipe-indicator img {
+	display: block;
+	width: 100%;
+	height: auto;
+
+}
+
+.btn-area {
+	position: relative;
+	margin: 1em auto;
+	text-align: center;
+	color: white;
+	transition: opacity 0.3s;
+}
+
+.btn-area--is-hidden {
+	opacity: 0;
+	pointer-events: none;
+}
+
+.capture-btn,
+.file-input {
+	margin-top: 1em;
+	width: 11em;
+	height: 3.5em;
+}
+
+.capture-btn {
+	box-sizing: border-box;
+	position: absolute;
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+	top: 0;
+	left: 50%;
+	transform: translateX(-50%);
+	border-radius: 5px;
+	background: rgba(0, 0, 0, 0.3);
+	color: #fff;
+	pointer-events: none;
+}
+
+.icon {
+	width: 32px;
+	margin-right: 10px;
+}
+
+.file-input {
+	display: inline-block;
+	background: #fc0;
+	cursor: pointer;
+	opacity: 0;
+}

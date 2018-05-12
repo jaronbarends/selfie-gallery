@@ -1,0 +1,130 @@
+body {
+	background: tan;
+	background-image: repeating-linear-gradient(to right,
+		transparent 0,
+		transparent 9px,
+		rgba(255,255,255,0.2) 0,
+		rgba(255,255,255,0.2) 10px,
+		transparent 0,
+		transparent 21px,
+		rgba(255,255,255, 0.5) 0,
+		rgba(255,255,255,0.2) 22px,
+		transparent 0,
+		transparent 33px,
+		rgba(255,255,255,0.2) 0,
+		rgba(255,255,255,0.2) 34px,
+		transparent 0,
+		transparent 60px
+	);
+}
+
+.img-list {
+	list-style: none;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-around;
+}
+
+.img-frame {
+	position: relative;
+	margin: 20px;
+	width: 200px;
+	padding: 20px;
+	border: 5px solid #666;
+	border-radius: 5px;
+	text-align: center;
+	transform-origin: top center;
+	background: white;
+	transition: transform 0.4s;
+}
+
+.img-frame::after {
+	display: block;
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	box-shadow: 4px 4px 5px 4px rgba(0,0,0, 0.4);
+	pointer-events: none;
+}
+
+.img-holder {
+	overflow: hidden;
+	border: 2px solid #666;
+}
+
+.img-frame--dynamic .img-holder {
+	position: relative;/* so we can position qr-box and img at (0.0) */
+	height: 100%;
+}
+
+.img-frame img,
+.frame {
+	display: block;
+	width: 100%;
+	height: auto;
+}
+
+@keyframes move-in-img {
+	0%   { transform: translate3d(0, var(--y), 0); }
+	100% { transform: translate3d(0, 0, 0) }
+}
+
+@keyframes move-out-qr {
+	0%   { transform: translate3d(0, var(--y), 0); }
+	100% { transform: translate3d(0, -100%, 0) }
+}
+
+.qr-box,
+.captured-img-holder {
+	position: absolute;
+	left: 0;
+	top: 0;
+	height: 100%;
+}
+
+.qr-box {
+	--y: 0%;/* will be changed by js */
+	transform: translate3d(0, var(--y), 0);
+	text-align: center;
+	width: 100%;
+}
+
+.qr-box--received {
+	animation: move-out-qr 0.2s forwards;
+}
+
+.qr-link {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	width: 100%;
+	height: 100%;
+}
+
+.qr-box__cta {
+	margin-bottom: 2em;
+}
+
+.captured-img-holder {
+	--y: 100%;/* --y will be changed by js */
+	transform: translate3d(0, var(--y), 0);
+}
+
+.captured-img-holder--received {
+	animation: move-in-img 0.2s forwards;
+}
+
+.qr-box img,
+.captured-img-holder img {
+	border: none;
+}
+
+.captured-img {
+	display: block;
+	width: 100%;
+	height: auto;
+	transform: translateY(40%) rotate(90deg) scale(1.333);
+}
