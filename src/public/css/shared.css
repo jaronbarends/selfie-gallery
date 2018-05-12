@@ -22,40 +22,23 @@ body {
 	font-family: Helvetica, arial, sans-serif;
 	font-size: 1.6rem;
 	line-height: 1.75;
+	
+	background: tan;
+	background-image: repeating-linear-gradient(to right,
+		transparent 0,
+		transparent 9px,
+		rgba(255,255,255,0.2) 0,
+		rgba(255,255,255,0.2) 10px,
+		transparent 0,
+		transparent 21px,
+		rgba(255,255,255, 0.5) 0,
+		rgba(255,255,255,0.2) 22px,
+		transparent 0,
+		transparent 33px,
+		rgba(255,255,255,0.2) 0,
+		rgba(255,255,255,0.2) 34px,
+		transparent 0,
+		transparent 60px
+	);
 }
 
-
-/*-- Start forms --*/
-	
-	input[type="text"],
-	input[type="submit"] {
-		border: 1px solid #ccc;
-		border-radius: 4px;
-		padding: 0.25em 0.5em;
-		-webkit-appearance: none;
-	}
-
-	input[type="submit"] {
-		border-color: transparent;
-		background: cornflowerblue;
-	}
-	
-/*-- End forms --*/
-
-
-/*-- Start utility classes --*/
-	
-	.u-hidden {
-		display: none;
-	}
-	
-/*-- End utility classes --*/
-
-
-/*-- Start debug classes --*/
-	
-	.id-box {
-		color: #ccc;
-	}
-	
-/*-- End debug classes --*/
