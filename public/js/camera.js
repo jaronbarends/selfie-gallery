@@ -3,6 +3,15 @@
     
     const btnArea = document.getElementById('btn-area');
 
+    const log = function(msg) {
+        var win = document.getElementById('log'),
+            h = win.innerHTML;
+
+        h += msg + '<br>';
+        win.innerHTML = h;
+    }
+    
+
     /**
     * reduce the image size
     * @returns {undefined}
@@ -19,18 +28,20 @@
         var height = img.height;
 
         if (width > height) {
-        if (width > MAX_WIDTH) {
-            height *= MAX_WIDTH / width;
-            width = MAX_WIDTH;
-        }
+            if (width > MAX_WIDTH) {
+                height *= MAX_WIDTH / width;
+                width = MAX_WIDTH;
+            }
         } else {
-        if (height > MAX_HEIGHT) {
-            width *= MAX_HEIGHT / height;
-            height = MAX_HEIGHT;
-        }
+            if (height > MAX_HEIGHT) {
+                width *= MAX_HEIGHT / height;
+                height = MAX_HEIGHT;
+            }
         }
         canvas.width = width;
         canvas.height = height;
+
+        log(`width: ${width}; height: ${height}`);
         var ctx = canvas.getContext("2d");
         ctx.drawImage(img, 0, 0, width, height);
 
