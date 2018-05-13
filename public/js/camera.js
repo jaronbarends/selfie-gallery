@@ -4,6 +4,43 @@
     const btnArea = document.getElementById('btn-area');
 
     /**
+    * reduce the image size
+    * @returns {undefined}
+    */
+    const getDataForSmallerImg = function(img) {
+        var canvas = document.createElement("canvas");
+        var ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0);
+
+        var MAX_WIDTH = 80;
+        var MAX_HEIGHT = 60;
+        var width = img.width;
+        var height = img.height;
+
+        if (width > height) {
+        if (width > MAX_WIDTH) {
+            height *= MAX_WIDTH / width;
+            width = MAX_WIDTH;
+        }
+        } else {
+        if (height > MAX_HEIGHT) {
+            width *= MAX_HEIGHT / height;
+            height = MAX_HEIGHT;
+        }
+        }
+        canvas.width = width;
+        canvas.height = height;
+        var ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0, width, height);
+
+        var dataurl = canvas.toDataURL("image/png");
+        // console.log('smaller:', dataurl);
+
+        return dataurl;
+    };
+    
+
+    /**
     * convert the input image to data-url
     * @returns {undefined}
     */
@@ -12,18 +49,37 @@
         if (files && files[0]) {
             var reader = new FileReader();
 
+            const capturedImg = document.getElementById('captured-img');
+            capturedImg.addEventListener('load', console.log('loaded capturedImg'));
+
             reader.onload = function (e) {
                 const imgData = e.target.result;
-                document.getElementById('captured-img').setAttribute('src', imgData);
-                document.getElementById('swipe-area').classList.add('swipe-area--image-is-loaded');
-                
-                // make body trigger event so other scripts on this page can listen for it
-                const newimagedataEvent = new CustomEvent('newimagedata', {
-                    detail: {
-                        imgData
-                    }
-                });
-                document.body.dispatchEvent(newimagedataEvent);
+                    capturedImg.setAttribute('src', imgData);
+
+                    // capturedImg
+
+                    // console.log('org:', imgData);
+
+                // we need timeout to make sure img is loaded
+                setTimeout(() => {
+                    console.log('call smallerData');
+                    const smallerImgData = getDataForSmallerImg(capturedImg);
+                    // console.log('sm:', smallerImgData);
+
+                    // setTimeout(() => {
+                        capturedImg.setAttribute('src', smallerImgData);
+                    // }, 2000);
+
+                    document.getElementById('swipe-area').classList.add('swipe-area--image-is-loaded');
+                    
+                    // make body trigger event so other scripts on this page can listen for it
+                    const newimagedataEvent = new CustomEvent('newimagedata', {
+                        detail: {
+                            imgData: smallerImgData
+                        }
+                    });
+                    document.body.dispatchEvent(newimagedataEvent);
+                }, 1);
             }
 
             reader.readAsDataURL(files[0]);// this will trigger onload event when img data is parsed
