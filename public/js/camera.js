@@ -79,7 +79,7 @@
                         }
                     });
                     document.body.dispatchEvent(newimagedataEvent);
-                }, 1);
+                }, 1000);
             }
 
             reader.readAsDataURL(files[0]);// this will trigger onload event when img data is parsed
