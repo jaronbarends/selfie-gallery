@@ -43,7 +43,8 @@
 
         log(`width: ${width}; height: ${height}`);
         var ctx = canvas.getContext("2d");
-        ctx.drawImage(img, 0, 0, width, height);
+        // ctx.drawImage(img, 0, 0, width, height);
+        ctx.drawImage(img, 0, 0, 60, 45);
 
         var dataurl = canvas.toDataURL("image/png");
         // console.log('smaller:', dataurl);
