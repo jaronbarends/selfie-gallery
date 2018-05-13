@@ -47,7 +47,7 @@ body {
 /*-- Start swipe indicator --*/
 
 	:root {
-		--timing: 2s infinite forwards;
+		--timing: 2s 3 forwards;
 	}
 
 	@keyframes swipe-hand-anim {
