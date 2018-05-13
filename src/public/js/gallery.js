@@ -33,6 +33,19 @@
 		qrBox.classList.add('qr-box--received');
 	};
 
+		
+	/**
+	* handle removing of image
+	* @returns {undefined}
+	*/
+	const removeImageHandler = function() {
+		// reset css vars so imgHolder and qrBox go to right positions
+		imgHolder.setAttribute('style', `--y: 100%`);
+		qrBox.setAttribute('style', `--y: 0`);
+		imgHolder.classList.remove('captured-img-holder--received');
+		qrBox.classList.remove('qr-box--received');
+	};
+
 
 	/**
 	* handle swiping motion on camera
@@ -57,6 +70,7 @@
 		io.on('imagedatatransfer', imageDataTransferHandler);
 		io.on('imagetransfer', imageTransferHandler);
 		io.on('swipemove', handleSwipe);
+		io.on('removeimage', removeImageHandler);
 	};
 
 

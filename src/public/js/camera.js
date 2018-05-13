@@ -1,5 +1,7 @@
 ;(function() {
     
+    
+    const btnArea = document.getElementById('btn-area');
 
     /**
     * convert the input image to data-url
@@ -13,7 +15,8 @@
             reader.onload = function (e) {
                 const imgData = e.target.result;
                 document.getElementById('captured-img').setAttribute('src', imgData);
-                document.getElementById('swipe-area').classList.add('swipe-area--image-is-loaded')
+                document.getElementById('swipe-area').classList.add('swipe-area--image-is-loaded');
+                
                 // make body trigger event so other scripts on this page can listen for it
                 const newimagedataEvent = new CustomEvent('newimagedata', {
                     detail: {
@@ -33,10 +36,18 @@
     * hide the capture button
     * @returns {undefined}
     */
-    const hideBtn = function() {
-        const btn = document.getElementById('btn-area');
-        btn.classList.add('btn-area--is-hidden');
+    const hideBtnArea = function() {
+        btnArea.classList.add('btn-area--is-hidden');
     };
+
+    /**
+    * show the capture button
+    * @returns {undefined}
+    */
+    const showBtnArea = function() {
+        btnArea.classList.remove('btn-area--is-hidden');
+    };
+
 
 
 
@@ -45,20 +56,41 @@
     * @returns {undefined}
     */
     const newImageHandler = function(e) {
-        hideBtn();
+        hideBtnArea();
         processImage(e);
-
     };
 
+    /**
+    * handle removal of image in gallery - show capture button again
+    * @returns {undefined}
+    */
+    const removeImageHandler = function() {
+        showBtnArea();
+        document.getElementById('swipe-area').classList.remove('swipe-area--image-is-loaded');
+    };
+    
 
+
+	/**
+	* kick off the app once the socket connection is ready
+	* @param {event} e The ready.socket event sent by socket js
+	* @param {Socket} socket This client's socket
+	* @returns {undefined}
+	*/
+	var connectionReadyHandler = function(e, io) {
+		if (io) {
+            document.getElementById('file-input').addEventListener('change', newImageHandler);
+			io.on('removeimage', removeImageHandler);
+		}
+	};
 
     /**
     * initialize all
     * @returns {undefined}
     */
     const init = function() {
-        const fileInput = document.getElementById('file-input');
-        fileInput.addEventListener('change', newImageHandler);
+        $(document).on('connectionready.socket', connectionReadyHandler);
+
     };
 
     document.addEventListener('DOMContentLoaded', init);

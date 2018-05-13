@@ -1,3 +1,10 @@
+body {
+}
+
+:root {
+	--br: 5px;/* border-radius */
+}
+
 .img-area,
 .swipe-area {
 	padding: 20px;
@@ -13,9 +20,9 @@
 
 
 .swipe-area {
-	margin: -20px;
+	margin: -20px -20px 20px;
 	border: 5px dotted rgba(255, 255, 255, 0.4);
-	border-radius: 5px;
+	border-radius: var(--br);
 	transition: border-color 0.5s;
 }
 
@@ -36,237 +43,218 @@
 	opacity: 1;
 }
 
-@keyframes indicate-swipe {
-	/* 0% {
-		opacity: 0;
-		transform: translateY(0);
+
+/*-- Start swipe indicator --*/
+
+	:root {
+		--timing: 2s infinite forwards;
 	}
-	10%,
-	40% {
-		transform: translateY(0);
-		opacity: 1;
+
+	@keyframes swipe-hand-anim {
+		0% {
+			opacity: 0;
+			transform: rotate(-50deg) scale(1.4) ;
+		}
+		10% {
+			opacity: 1;
+		}
+		20%,
+		30% {
+			opacity: 1;
+			transform: rotate(-50deg);
+		}
+		70%,
+		80% {
+			opacity: 0.6;
+			transform: translate3d(0, -400px, 0) rotate(-50deg);
+		}
+		100% {
+			opacity: 0;
+			transform: translate3d(0, -400px, 0) rotate(-50deg) scale(1.4);
+		}
+
 	}
-	60%,
-	100% {
-		transform: translateY(-50px);
-		opacity: 0;
-	} */
-	0%,
-	100% {
-		opacity: 0;
-		transform: translateY(0) rotate(-60deg);
+
+	@keyframes circle-anim {
+		0%,
+		10% {
+			opacity: 0;
+			transform: scale(0);
+		}
+		30% {
+			opacity: 1;
+			transform: scale(1);
+		}
+		70%,
+		80% {
+			opacity: 1;
+			transform: translate3d(0, -400px, 0);
+		}
+		100% {
+			opacity: 0;
+			transform: translate3d(0, -400px, 0);
+		}
 	}
-	5% {
-		opacity: 1;
+
+	@keyframes arrow-anim {
+		0%,
+		30% {
+			transform: none;
+		}
+		50%,
+		100% {
+			transform: translate3d(0, -60%, 0);
+		}
 	}
-	20% {
-		transform: translateY(0) rotate(-60deg);
+
+	@keyframes arrow-head-anim {
+		0%,
+		20% {
+			opacity: 0;
+		}
+		30%,
+		40% {
+			opacity: 1;
+		}
+		50%,
+		100% {
+			opacity: 0;
+		}
 	}
-	35% {
-		opacity: 1;
+
+	@keyframes arrow-line-anim {
+		0%,
+		20% {
+			opacity: 0;
+		}
+		30% {
+			opacity: 1;
+			transform: none;
+		}
+		50% {
+			transform: scale3d(1, 0, 1);
+		}
+		100% {
+			opacity: 1;
+			transform: scale3d(1, 0, 1);
+		}
 	}
-	50% {
-		transform: translateY(-400px) rotate(-45deg);
+
+	.swipe-indicator {
+		position: absolute;
+		display: block;
+		top: 240px;
+		left: 50%;
+		border-radius: 20px;
+		pointer-events: none;
 		opacity: 0;
 	}
 
-}
-
-:root {
-	--timing: 2s 3 forwards;
-}
-
-@keyframes swipe-hand-anim {
-	0% {
-		opacity: 0;
-		transform: rotate(-50deg) scale(1.4) ;
+	.swipe-indicator::after {
+		/* circle */
+		position: absolute;
+		content: '';
+		display: block;
+		color: rgba(255, 255, 255, 0.4);
+		background: currentColor;
+		--r: 20px;
+		top: calc(-1 * var(--r));
+		left: calc(-1 * var(--r));
+		width: calc(2 * var(--r));
+		height: calc(2 * var(--r));
+		border-radius: 50%;
 	}
-	10% {
+
+	.swipe-arrow {
+		position: absolute;
+		height: 150px;
+		top: -170px;
+		color: white;
+	}
+
+	.swipe-arrow::before,
+	.swipe-arrow::after {
+		position: absolute;
+		content: '';
+		display: block;
+		left: -2px;
+		width: 0;
+		height: calc(100% - 10px);
+		border-right: 4px solid;
+		color: rgba(255, 255, 255, 0.4);
+	}
+
+	.swipe-arrow::before {
+		/* arrrow line */
+		background: currentColor;
+		transform-origin: top center;
+	}
+
+	.swipe-arrow::after {
+		/* arrow head */
+		width: 0;
+		height: 0;
+		top: -34px;
+		left: -10px;
+		border: 10px solid transparent;
+		border-bottom: 24px solid white
+	}
+
+	.swipe-indicator--is-active {
 		opacity: 1;
 	}
-	20%,
-	30% {
-		opacity: 1;
+
+	.swipe-hand {
+		position: absolute;
+		display: block;
+		top: -7px;
+		left: -28px;
+		z-index: 1;
+		width: 80px;
+		height: auto;
+		transform-origin: 35% 7%;
 		transform: rotate(-50deg);
-	}
-	70%,
-	80% {
-		opacity: 0.6;
-		transform: translate3d(0, -400px, 0) rotate(-50deg);
-	}
-	100% {
 		opacity: 0;
-		transform: translate3d(0, -400px, 0) rotate(-50deg) scale(1.4);
 	}
 
-}
-
-@keyframes circle-anim {
-	0%,
-	10% {
-		opacity: 0;
-		transform: scale(0);
+	.swipe-indicator--is-active::after {
+		animation: circle-anim var(--timing);
 	}
-	30% {
+	.swipe-indicator--is-active .swipe-hand {
+		animation: swipe-hand-anim var(--timing);
+	}
+	.swipe-indicator--is-active .swipe-arrow {
+		animation: arrow-anim var(--timing);
+	}
+	.swipe-indicator--is-active .swipe-arrow::before {
+		animation: arrow-line-anim var(--timing);
+	}
+	.swipe-indicator--is-active .swipe-arrow::after {
+		animation: arrow-head-anim var(--timing);
+	}
+
+/*-- End swipe indicator --*/
+
+/*-- Start instruction --*/
+
+	.instruction-area {
+		display: none;
+		margin: 0 auto;
+		max-width: 15em;
+		border-radius: var(--br);
+		padding: 1em;
+		background: white;
+		text-align: center;
+		/* opacity: 0; */
+		transition: opacity 0.3s;
+	}
+
+	.instruction-area--is-active {
 		opacity: 1;
-		transform: scale(1);
+		display: block;
 	}
-	70%,
-	80% {
-		opacity: 1;
-		transform: translate3d(0, -400px, 0);
-	}
-	100% {
-		opacity: 0;
-		transform: translate3d(0, -400px, 0);
-	}
-}
 
-@keyframes arrow-anim {
-	0%,
-	30% {
-		transform: none;
-	}
-	50%,
-	100% {
-		transform: translate3d(0, -60%, 0);
-	}
-}
-
-@keyframes arrow-head-anim {
-	0%,
-	20% {
-		opacity: 0;
-	}
-	30%,
-	40% {
-		opacity: 1;
-	}
-	50%,
-	100% {
-		opacity: 0;
-	}
-}
-
-@keyframes arrow-line-anim {
-	0%,
-	20% {
-		opacity: 0;
-	}
-	30% {
-		opacity: 1;
-		transform: none;
-	}
-	50% {
-		transform: scale3d(1, 0, 1);
-	}
-	100% {
-		opacity: 1;
-		transform: scale3d(1, 0, 1);
-	}
-}
-
-.swipe-indicator {
-	position: absolute;
-	display: block;
-	top: 280px;
-	left: 50%;
-	border-radius: 20px;
-	pointer-events: none;
-	opacity: 0;
-}
-
-.swipe-indicator::after {
-	/* circle */
-	position: absolute;
-	content: '';
-	display: block;
-	color: rgba(255, 255, 255, 0.4);
-	background: currentColor;
-	--r: 20px;
-	top: calc(-1 * var(--r));
-	left: calc(-1 * var(--r));
-	width: calc(2 * var(--r));
-	height: calc(2 * var(--r));
-	border-radius: 50%;
-}
-
-.swipe-arrow {
-	position: absolute;
-	height: 150px;
-	top: -170px;
-	color: white;
-	/* opacity: 0; */
-}
-
-.swipe-arrow::before,
-.swipe-arrow::after {
-	position: absolute;
-	content: '';
-	display: block;
-	left: -2px;
-	width: 0;
-	height: calc(100% - 10px);
-	border-right: 4px solid;
-	color: rgba(255, 255, 255, 0.4);
-}
-
-.swipe-arrow::before {
-	/* arrrow line */
-	background: currentColor;
-	transform-origin: top center;
-}
-
-.swipe-arrow::after {
-	/* arrow head */
-	width: 0;
-	height: 0;
-	top: -34px;
-	left: -10px;
-	border: 10px solid transparent;
-	border-bottom: 24px solid white
-}
-
-
-.swipe-indicator--is-hidden {
-	/* opacity: 0; */
-}
-
-.swipe-indicator--is-active {
-	/* animation: indicate-swipe 2s;
-	animation-timing-function: ease-out;
-	animation-iteration-count: 300; */
-	opacity: 1;
-}
-
-.swipe-hand {
-	position: absolute;
-	display: block;
-	top: -7px;
-	left: -28px;
-	z-index: 1;
-	width: 80px;
-	height: auto;
-	transform-origin: 35% 7%;
-	transform: rotate(-50deg);
-	opacity: 0;
-}
-
-.swipe-indicator--is-active::after {
-	animation: circle-anim var(--timing);
-}
-.swipe-indicator--is-active .swipe-hand {
-	animation: swipe-hand-anim var(--timing);
-}
-.swipe-indicator--is-active .swipe-arrow {
-	animation: arrow-anim var(--timing);
-}
-.swipe-indicator--is-active .swipe-arrow::before {
-	animation: arrow-line-anim var(--timing);
-}
-.swipe-indicator--is-active .swipe-arrow::after {
-	animation: arrow-head-anim var(--timing);
-}
+/*-- End instruction --*/
 
 .btn-area {
 	position: relative;
@@ -281,14 +269,15 @@
 	pointer-events: none;
 }
 
-.capture-btn,
+.btn,
 .file-input {
 	margin-top: 1em;
 	width: 11em;
 	height: 3.5em;
 }
 
-.capture-btn {
+
+.btn {
 	box-sizing: border-box;
 	position: absolute;
 	display: inline-flex;
@@ -297,10 +286,17 @@
 	top: 0;
 	left: 50%;
 	transform: translateX(-50%);
-	border-radius: 5px;
+	border-radius: var(--br);
 	background: rgba(0, 0, 0, 0.3);
 	color: #fff;
+}
+
+.btn--capture {
 	pointer-events: none;
+}
+
+.btn--remove {
+	top: 380px;
 }
 
 .icon {

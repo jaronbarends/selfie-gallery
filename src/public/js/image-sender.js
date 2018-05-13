@@ -10,6 +10,10 @@
 	//io is a bit of a strange name, but it's being used in examples everywhere,
 	//so let's stick to that.
 
+	const instructionArea = document.getElementById('instruction-area'),
+		instructionActiveClass = 'instruction-area--is-active',
+		indicator = document.getElementById('swipe-indicator'),
+		indicatorActiveClass = 'swipe-indicator--is-active';
 
 	/**
 	* send an event to the socket server that will be passed on to all sockets
@@ -24,7 +28,6 @@
 	};
 	
 
-
 	/**
 	* tell sockets to really send image
 	* @returns {undefined}
@@ -33,20 +36,6 @@
 		sendEventToSockets('imagetransfer');
 	};
 	
-
-	/**
-	* remove a card and call any needed actions
-	* @returns {undefined}
-	*/
-	const removeCard = function() {
-		console.log('remove');
-		const swipeObj = this,
-			elm = swipeObj.elem;
-
-		swipeObj.destroy(true);// has to be called in scope of Swiped
-	};
-
-
 
 	/**
 	* 
@@ -61,7 +50,7 @@
 			bottom: 400,
 			onOpen: function() {
 				sendImage();
-				this.destroy(true);
+				// this.destroy(true);
 			}
 		});
 
@@ -84,13 +73,13 @@
 		// document.getElementById('send-btn').addEventListener('click', sendImage);
 		initSwipe();
 		
-        const sendBtn = document.getElementById('send-btn');
-        if (sendBtn) {
-            sendBtn.addEventListener('click', (e) => {
+		const sendBtn = document.getElementById('send-btn');
+		if (sendBtn) {
+			sendBtn.addEventListener('click', (e) => {
 				e.preventDefault();
 				sendImage();
 			})
-        }
+		}
 	};
 	
 
@@ -101,9 +90,8 @@
 	* @returns {undefined}
 	*/
 	const newImageHandler = function() {
-		const indicator = document.getElementById('swipe-indicator');
-		indicator.classList.add('swipe-indicator--is-active');
-		indicator.classList.remove('swipe-indicator--is-hidden');
+		instructionArea.classList.add(instructionActiveClass);
+		indicator.classList.add(indicatorActiveClass);
 	};
 
 
@@ -112,12 +100,43 @@
 	* @returns {undefined}
 	*/
 	const newImageDataHandler = function(e) {
-		console.log('send imagedatatransfer');
 		sendEventToSockets('imagedatatransfer', e.detail);
+	};
+
+	/**
+	* handle image being sent to gallery
+	* @returns {undefined}
+	*/
+	const imageSentHandler = function() {
+		instructionArea.classList.remove(instructionActiveClass);
+		indicator.classList.remove(indicatorActiveClass);
+	};
+
+	/**
+	* handle removing image
+	* @returns {undefined}
+	*/
+	const removeHandler = function(evt) {
+		evt.preventDefault();
+		console.log('remove');
+		sendEventToSockets('removeimage');
+		const area = document.getElementById('swipe-area');
+		area.style.transform = 'none';
 	};
 	
 	
-
+	/**
+	* handle removing of image
+	* @returns {undefined}
+	*/
+	const removeImageHandler = function() {
+		
+		instructionArea.classList.remove(instructionActiveClass);
+		indicator.classList.remove(indicatorActiveClass);
+	};
+	
+	
+	
 
 	/**
 	* kick off the app once the socket connection is ready
@@ -128,6 +147,17 @@
 	var connectionReadyHandler = function(e, io) {
 		if (io) {
 			initSender();
+			
+			document.getElementById('file-input').addEventListener('change', newImageHandler);
+			document.body.addEventListener('newimagedata', newImageDataHandler);
+			document.getElementById('remove-btn').addEventListener('click', removeHandler);
+			// remove indicator when user interacts
+			document.addEventListener('touchstart', () => {
+				indicator.classList.remove(indicatorActiveClass);
+			});
+
+			io.on('imagetransfer', imageSentHandler);
+			io.on('removeimage', removeImageHandler);
 		}
 	};
 	
@@ -139,9 +169,6 @@
 	*/
 	var init = function() {
 		$(document).on('connectionready.socket', connectionReadyHandler);
-        const fileInput = document.getElementById('file-input');
-		fileInput.addEventListener('change', newImageHandler);
-		document.body.addEventListener('newimagedata', newImageDataHandler);
 	};
 
 	$(document).ready(init);

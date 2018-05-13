@@ -18,21 +18,31 @@
 			<div id="swipe-area" class="swipe-area">
 				<img src="" id="captured-img" class="captured-img">
 			</div>
+
 			<div id="swipe-indicator" class="swipe-indicator">
 				<img class="swipe-hand" src="img/swipe-hand.png" alt="">
 				<div class="swipe-arrow"></div>
 			</div>
 		</div>
 
-		<div id="btn-area" class="btn-area">
-			<div id="capture-btn" class="capture-btn">
-					<svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 100 110" x="0px" y="0px"><path d="M92.84,36.52a10,10,0,0,0-10-10H70.7l-1.29-5.16a10,10,0,0,0-9.7-7.57H40.29a10,10,0,0,0-9.7,7.57L29.3,26.52H17.16a10,10,0,0,0-10,10V76.21a10,10,0,0,0,10,10H82.84a10,10,0,0,0,10-10Zm-4,39.69a6,6,0,0,1-6,6H17.16a6,6,0,0,1-6-6V36.52a6,6,0,0,1,6-6H30.86A2,2,0,0,0,32.8,29l1.67-6.67a6,6,0,0,1,5.82-4.54H59.71a6,6,0,0,1,5.82,4.54L67.2,29a2,2,0,0,0,1.94,1.51H82.84a6,6,0,0,1,6,6Z" fill="#fff"/><path d="M50,33.21a21,21,0,1,0,21,21A21.07,21.07,0,0,0,50,33.21ZM50,71.3a17,17,0,1,1,17-17A17.06,17.06,0,0,1,50,71.3Z" fill="#fff"/></svg>
-					<span>open camera</span>
-				</div>
-			<input class="file-input" type="file" accept="image/*" id="file-input">
+		<div id="instruction-area" class="instruction-area">
+			<p class="instruction">
+				Swipe your selfie to the gallery
+			</p>
 		</div>
 
-		<!-- <a href="#" id="send-btn">Send!</a> -->
+		<div id="btn-area" class="btn-area">
+			<div id="capture-btn" class="btn btn--capture">
+				<svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 100 110" x="0px" y="0px"><path d="M92.84,36.52a10,10,0,0,0-10-10H70.7l-1.29-5.16a10,10,0,0,0-9.7-7.57H40.29a10,10,0,0,0-9.7,7.57L29.3,26.52H17.16a10,10,0,0,0-10,10V76.21a10,10,0,0,0,10,10H82.84a10,10,0,0,0,10-10Zm-4,39.69a6,6,0,0,1-6,6H17.16a6,6,0,0,1-6-6V36.52a6,6,0,0,1,6-6H30.86A2,2,0,0,0,32.8,29l1.67-6.67a6,6,0,0,1,5.82-4.54H59.71a6,6,0,0,1,5.82,4.54L67.2,29a2,2,0,0,0,1.94,1.51H82.84a6,6,0,0,1,6,6Z" fill="#fff"/><path d="M50,33.21a21,21,0,1,0,21,21A21.07,21.07,0,0,0,50,33.21ZM50,71.3a17,17,0,1,1,17-17A17.06,17.06,0,0,1,50,71.3Z" fill="#fff"/></svg>
+				<span>Open camera</span>
+			</div>
+			<input class="file-input" type="file" accept="image/*" id="file-input">
+		</div>
+		<div id="remove-btn" class="btn btn--remove">
+			Remove my picture
+		</div>
+
+		<a href="#" id="send-btn">Send!</a>
 	</div>
 
 	<!-- Including the JS libraries that we use -->
