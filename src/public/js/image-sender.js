@@ -13,7 +13,8 @@
 	const instructionArea = document.getElementById('instruction-area'),
 		instructionActiveClass = 'instruction-area--is-active',
 		indicator = document.getElementById('swipe-indicator'),
-		indicatorActiveClass = 'swipe-indicator--is-active';
+		indicatorActiveClass = 'swipe-indicator--is-active',
+		removeBtn = document.getElementById('remove-btn');
 
 	/**
 	* send an event to the socket server that will be passed on to all sockets
@@ -110,6 +111,7 @@
 	const imageSentHandler = function() {
 		instructionArea.classList.remove(instructionActiveClass);
 		indicator.classList.remove(indicatorActiveClass);
+		removeBtn.classList.remove('btn--is-hidden');
 	};
 
 	/**
@@ -130,9 +132,9 @@
 	* @returns {undefined}
 	*/
 	const removeImageHandler = function() {
-		
 		instructionArea.classList.remove(instructionActiveClass);
 		indicator.classList.remove(indicatorActiveClass);
+		removeBtn.classList.add('btn--is-hidden');
 	};
 	
 	
@@ -150,7 +152,7 @@
 			
 			document.getElementById('file-input').addEventListener('change', newImageHandler);
 			document.body.addEventListener('newimagedata', newImageDataHandler);
-			document.getElementById('remove-btn').addEventListener('click', removeHandler);
+			removeBtn.addEventListener('click', removeHandler);
 			// remove indicator when user interacts
 			document.addEventListener('touchstart', () => {
 				indicator.classList.remove(indicatorActiveClass);
