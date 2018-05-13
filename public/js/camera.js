@@ -17,39 +17,39 @@
     * @returns {undefined}
     */
     const getDataForSmallerImg = function(img) {
-        var canvas = document.createElement("canvas");
-        canvas = document.getElementById('my-canvas');
-        var ctx = canvas.getContext("2d");
-        ctx.drawImage(img, 0, 0);
+        // var canvas = document.createElement("canvas");
+        // canvas = document.getElementById('my-canvas');
+        // var ctx = canvas.getContext("2d");
+        // ctx.drawImage(img, 0, 0);
 
-        var MAX_WIDTH = 80;
-        var MAX_HEIGHT = 60;
-        var width = img.width;
-        var height = img.height;
+        // var MAX_WIDTH = 80;
+        // var MAX_HEIGHT = 60;
+        // var width = img.width;
+        // var height = img.height;
 
-        if (width > height) {
-            if (width > MAX_WIDTH) {
-                height *= MAX_WIDTH / width;
-                width = MAX_WIDTH;
-            }
-        } else {
-            if (height > MAX_HEIGHT) {
-                width *= MAX_HEIGHT / height;
-                height = MAX_HEIGHT;
-            }
-        }
-        canvas.width = width;
-        canvas.height = height;
+        // if (width > height) {
+        //     if (width > MAX_WIDTH) {
+        //         height *= MAX_WIDTH / width;
+        //         width = MAX_WIDTH;
+        //     }
+        // } else {
+        //     if (height > MAX_HEIGHT) {
+        //         width *= MAX_HEIGHT / height;
+        //         height = MAX_HEIGHT;
+        //     }
+        // }
+        // canvas.width = width;
+        // canvas.height = height;
 
-        log(`width: ${width}; height: ${height}`);
-        var ctx = canvas.getContext("2d");
-        // ctx.drawImage(img, 0, 0, width, height);
-        ctx.drawImage(img, 0, 0, 45, 60);
+        // log(`width: ${width}; height: ${height}`);
+        // var ctx = canvas.getContext("2d");
+        // // ctx.drawImage(img, 0, 0, width, height);
+        // ctx.drawImage(img, 0, 0, 45, 60);
 
-        var dataurl = canvas.toDataURL("image/png");
-        // console.log('smaller:', dataurl);
+        // var dataurl = canvas.toDataURL("image/png");
+        // // console.log('smaller:', dataurl);
 
-        return dataurl;
+        // return dataurl;
     };
     
 
@@ -69,26 +69,16 @@
                 const imgData = e.target.result;
                     capturedImg.setAttribute('src', imgData);
 
-                    // capturedImg
-
-                    // console.log('org:', imgData);
-
                 // we need timeout to make sure img is loaded
                 setTimeout(() => {
-                    console.log('call smallerData');
-                    const smallerImgData = getDataForSmallerImg(capturedImg);
-                    // console.log('sm:', smallerImgData);
-
-                    // setTimeout(() => {
-                        capturedImg.setAttribute('src', smallerImgData);
-                    // }, 2000);
-
+                    // const smallerImgData = getDataForSmallerImg(capturedImg);
+                    // capturedImg.setAttribute('src', smallerImgData);
                     document.getElementById('swipe-area').classList.add('swipe-area--image-is-loaded');
                     
                     // make body trigger event so other scripts on this page can listen for it
                     const newimagedataEvent = new CustomEvent('newimagedata', {
                         detail: {
-                            imgData: smallerImgData
+                            imgData
                         }
                     });
                     document.body.dispatchEvent(newimagedataEvent);
