@@ -20,6 +20,7 @@
 	* @returns {undefined}
 	*/
 	const imageDataTransferHandler = function(data) {
+		console.log('transfer');
 		document.getElementById('captured-img').setAttribute('src', data.imgData);
 	};
 
@@ -71,9 +72,14 @@
 		io.on('imagetransfer', imageTransferHandler);
 		io.on('swipemove', handleSwipe);
 		io.on('removeimage', removeImageHandler);
+
+		io.on('meta', (e) => {
+			console.log(e)
+		});
 	};
 
 
+	
 	/**
 	* send event to server to request entry to room
 	* @returns {undefined}

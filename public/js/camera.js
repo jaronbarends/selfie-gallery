@@ -89,7 +89,55 @@
 
         }
     };
+    
 
+    /**
+    * handle processed image
+    * @returns {undefined}
+    */
+    const processImageHandler = function(img, metaData) {
+            const capturedImg = document.getElementById('captured-img');
+            let dataUrl = img.src;
+            console.log(img.tagName);
+
+            if (img.tagName.toLowerCase() === 'canvas') {
+                dataUrl = img.toDataURL("image/png");
+                console.log(dataUrl);
+                capturedImg.src = dataUrl;
+            }
+            console.log(metaData);
+            // document.getElementById('swipe-area').appendChild(img);
+            
+            document.getElementById('swipe-area').classList.add('swipe-area--image-is-loaded');
+            // make body trigger event so other scripts on this page can listen for it
+            const newimagedataEvent = new CustomEvent('newimagedata', {
+                detail: {
+                    imgData: dataUrl
+                }
+            });
+            document.body.dispatchEvent(newimagedataEvent);
+    };
+    
+
+    /**
+    * process the uploaded image with loadImage
+    * @returns {undefined}
+    */
+    const processImage2 = function(e) {
+        const file = e.target.files[0],
+            callback = processImageHandler,
+            options = {
+                maxWidth: 200,
+                orientation: true,
+                meta: true,
+                canvas: false
+            };
+
+        loadImage(file, callback, options);
+    };
+
+
+    
 
     /**
     * hide the capture button
@@ -119,6 +167,17 @@
         processImage(e);
     };
 
+
+    /**
+    * handle newly captured image
+    * @returns {undefined}
+    */
+    const newImageHandler2 = function(e) {
+        hideBtnArea();
+        processImage2(e);
+    };
+
+
     /**
     * handle removal of image in gallery - show capture button again
     * @returns {undefined}
@@ -129,7 +188,6 @@
     };
     
 
-
 	/**
 	* kick off the app once the socket connection is ready
 	* @param {event} e The ready.socket event sent by socket js
@@ -138,7 +196,8 @@
 	*/
 	var connectionReadyHandler = function(e, io) {
 		if (io) {
-            document.getElementById('file-input').addEventListener('change', newImageHandler);
+            document.getElementById('file-input2').addEventListener('change', newImageHandler);
+            document.getElementById('file-input').addEventListener('change', newImageHandler2);
 			io.on('removeimage', removeImageHandler);
 		}
 	};
