@@ -112,4 +112,5 @@
 	width: 100%;
 	height: auto;
 	transform: translateY(40%) rotate(90deg) scale(1.333);
+	transform: none;
 }
