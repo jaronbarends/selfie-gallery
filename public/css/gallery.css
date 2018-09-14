@@ -14,7 +14,7 @@
 	position: relative;
 	margin: 20px;
 	width: 200px;
-	padding: 20px;
+	padding: 2rem 2rem 4rem;
 	border: 5px solid #666;
 	border-radius: 5px;
 	text-align: center;
@@ -52,6 +52,25 @@
 	height: auto;
 }
 
+.personal-info {
+	position: absolute;
+	left: 0;
+	bottom: 0.4rem;
+	width: 100%;
+	background: white;
+	text-align: center;
+	font-size: 1.2rem;
+	line-height: 1.4;
+}
+
+.personal-info__name {
+	font-weight: bold;
+}
+
+.personal-info__company {
+	font-size: 1rem;
+}
+
 @keyframes move-in-img {
 	0%   { transform: translate3d(0, var(--y), 0); }
 	100% { transform: translate3d(0, 0, 0) }
@@ -84,13 +103,18 @@
 .qr-link {
 	display: flex;
 	flex-direction: column;
-	justify-content: space-between;
+	justify-content: flex-start;
 	width: 100%;
 	height: 100%;
 }
 
 .qr-box__cta {
-	margin-bottom: 2em;
+	/* margin-bottom: 2em; */
+}
+
+.qr-box__footnote {
+	color: #aaa;
+	font-size: 1.2rem;
 }
 
 .captured-img-holder {
@@ -111,6 +135,7 @@
 	display: block;
 	width: 100%;
 	height: auto;
-	transform: translateY(40%) rotate(90deg) scale(1.333);
+	/* transform: translateY(40%) rotate(90deg) scale(1.333); */
 	transform: none;
+	/* filter: grayscale(1) contrast(20); */
 }

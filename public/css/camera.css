@@ -316,3 +316,14 @@ body {
 	cursor: pointer;
 	opacity: 0;
 }
+
+input[type="text"] {
+	border: 0;
+	border-bottom: 1px solid transparent;
+	border-radius: 0;
+	background: transparent;
+}
+
+input[type="text"]:placeholder-shown {
+	border-bottom-color: currentColor;
+}
