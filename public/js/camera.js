@@ -73,7 +73,9 @@
                 setTimeout(() => {
                     // const smallerImgData = getDataForSmallerImg(capturedImg);
                     // capturedImg.setAttribute('src', smallerImgData);
-                    document.getElementById('swipe-area').classList.add('swipe-area--image-is-loaded');
+					document.getElementById('swipe-area').classList.add('swipe-area--image-is-loaded');
+					console.log('jeej');
+                    document.getElementById('img-area').classList.add('img-area--image-is-loaded');
                     
                     // make body trigger event so other scripts on this page can listen for it
                     const newimagedataEvent = new CustomEvent('newimagedata', {
@@ -196,8 +198,8 @@
 	*/
 	var connectionReadyHandler = function(e, io) {
 		if (io) {
-            document.getElementById('file-input2').addEventListener('change', newImageHandler);
-            document.getElementById('file-input').addEventListener('change', newImageHandler2);
+            document.getElementById('file-input-desktop').addEventListener('change', newImageHandler);
+            document.getElementById('file-input-camera').addEventListener('change', newImageHandler2);
 			io.on('removeimage', removeImageHandler);
 		}
 	};

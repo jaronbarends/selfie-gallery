@@ -5,17 +5,29 @@ body {
 	--br: 5px;/* border-radius */
 }
 
+.o-content-width {
+	width: 375px;
+	height: 550px;
+	border: 1px dashed;
+}
+
 .img-area,
 .swipe-area {
 	padding: 20px;
 	/*iphone dimensions*/
 	width: 188px;
 	height: 251px;
+	height: 151px;
 }
 
 .img-area {
 	position: relative;
 	margin: 1em auto;
+	border: 5px solid blue;
+}
+
+.img-area--is-loaded {
+	height: 251px;
 }
 
 
@@ -311,10 +323,17 @@ body {
 }
 
 .file-input {
-	display: inline-block;
-	background: #fc0;
 	cursor: pointer;
+}
+
+.file-input--hidden {
+	/* hidden input field - camera button placed over it */
+	display: inline-block;
 	opacity: 0;
+}
+
+.o-form-row {
+	margin-bottom: 2em;
 }
 
 input[type="text"] {
