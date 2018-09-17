@@ -1,6 +1,8 @@
 body {
 }
 
+.body--image-is-loaded {}
+
 :root {
 	--br: 5px;/* border-radius */
 }
@@ -16,8 +18,8 @@ body {
 	padding: 20px;
 	/*iphone dimensions*/
 	width: 188px;
-	height: 251px;
 	height: 151px;
+	transition: height 0.3s ease-in-out;
 }
 
 .img-area {
@@ -26,19 +28,19 @@ body {
 	border: 5px solid blue;
 }
 
-.img-area--is-loaded {
+.body--image-is-loaded .img-area,
+.body--image-is-loaded .swipe-area {
 	height: 251px;
 }
 
-
 .swipe-area {
-	margin: -20px -20px 20px;
-	border: 5px dotted rgba(255, 255, 255, 0.4);
+	margin: -20px -20px 0;
+	/* border: 5px dotted rgba(255, 255, 255, 0.4);
 	border-radius: var(--br);
-	transition: border-color 0.5s;
+	transition: border-color 0.5s; */
 }
 
-.swipe-area--image-is-loaded {
+.body--image-is-loaded .swipe-area {
 	border-color: transparent;
 }
 
@@ -50,7 +52,7 @@ body {
 	transition: opacity 0.3s;
 }
 
-.swipe-area--image-is-loaded .captured-img {
+.body--image-is-loaded .swipe-area .captured-img {
 	box-shadow: 4px 4px 5px 4px rgba(0,0,0, 0.4);
 	opacity: 1;
 }
@@ -251,7 +253,7 @@ body {
 
 	.instruction-area {
 		display: none;
-		margin: 0 auto;
+		margin: 40px auto 0;
 		max-width: 15em;
 		border-radius: var(--br);
 		padding: 1em;
