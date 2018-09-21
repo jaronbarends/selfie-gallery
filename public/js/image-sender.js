@@ -150,7 +150,7 @@
 		if (io) {
 			initSender();
 			
-			document.getElementById('file-input').addEventListener('change', newImageHandler);
+			document.getElementById('file-input-camera').addEventListener('change', newImageHandler);
 			document.body.addEventListener('newimagedata', newImageDataHandler);
 			removeBtn.addEventListener('click', removeHandler);
 			// remove indicator when user interacts

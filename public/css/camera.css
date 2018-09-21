@@ -1,8 +1,19 @@
 body {
+	font-size: 1.6rem;
 }
+
+.body--image-is-loaded {}
 
 :root {
 	--br: 5px;/* border-radius */
+	--input-w: 11em;
+	--input-h: 3.5em;
+}
+
+.o-content-width {
+	width: 375px;
+	height: 550px;
+	border: 1px dashed;
 }
 
 .img-area,
@@ -10,23 +21,28 @@ body {
 	padding: 20px;
 	/*iphone dimensions*/
 	width: 188px;
-	height: 251px;
+	/* height: 151px; */
+	transition: height 0.3s ease-in-out;
 }
 
 .img-area {
 	position: relative;
-	margin: 1em auto;
+	margin: 1em auto 0;
 }
 
+.body--image-is-loaded .img-area,
+.body--image-is-loaded .swipe-area {
+	height: 251px;
+}
 
 .swipe-area {
-	margin: -20px -20px 20px;
-	border: 5px dotted rgba(255, 255, 255, 0.4);
+	margin: -20px -20px 0;
+	/* border: 5px dotted rgba(255, 255, 255, 0.4);
 	border-radius: var(--br);
-	transition: border-color 0.5s;
+	transition: border-color 0.5s; */
 }
 
-.swipe-area--image-is-loaded {
+.body--image-is-loaded .swipe-area {
 	border-color: transparent;
 }
 
@@ -38,7 +54,7 @@ body {
 	transition: opacity 0.3s;
 }
 
-.swipe-area--image-is-loaded .captured-img {
+.body--image-is-loaded .swipe-area .captured-img {
 	box-shadow: 4px 4px 5px 4px rgba(0,0,0, 0.4);
 	opacity: 1;
 }
@@ -239,7 +255,7 @@ body {
 
 	.instruction-area {
 		display: none;
-		margin: 0 auto;
+		margin: 40px auto 0;
 		max-width: 15em;
 		border-radius: var(--br);
 		padding: 1em;
@@ -258,7 +274,7 @@ body {
 
 .btn-area {
 	position: relative;
-	margin: 1em auto;
+	margin: 0 auto;
 	text-align: center;
 	color: white;
 	transition: opacity 0.3s;
@@ -271,9 +287,9 @@ body {
 
 .btn,
 .file-input {
-	margin-top: 1em;
-	width: 11em;
-	height: 3.5em;
+	/* margin-top: 1em; */
+	width: var(--input-w);
+	height: var(--input-h);
 }
 
 
@@ -311,8 +327,53 @@ body {
 }
 
 .file-input {
-	display: inline-block;
-	background: #fc0;
 	cursor: pointer;
+}
+
+.file-input--hidden {
+	/* hidden input field - camera button placed over it */
+	display: inline-block;
 	opacity: 0;
+}
+
+.name-and-company {
+	margin: 0 auto;
+	width: var(--input-w);
+}
+
+.name-and-company--is-hidden {
+	display: none;
+}
+
+.o-form-row {
+	margin-bottom: 2em;
+}
+
+label,
+input[type="text"] {
+	box-sizing: border-box;
+	display: block;
+	padding: 0 1rem;
+	width: 100%;
+}
+
+label {
+	font-size: 1.2rem;
+	transform: translateY(1.8em);
+}
+
+input[type="text"] {
+	padding-top: 0.8em;
+	border: 0;
+	border-radius: var(--br);
+	height: var(--input-h);
+	background: white;
+}
+
+input[type="text"]:placeholder-shown {
+	border-bottom-color: currentColor;
+}
+
+.desktop-debug {
+	display: none;
 }
