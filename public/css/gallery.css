@@ -61,6 +61,11 @@
 	text-align: center;
 	font-size: 1.2rem;
 	line-height: 1.4;
+	opacity: 0;
+}
+
+.personal-info--received {
+	opacity: 1;
 }
 
 .personal-info__name {

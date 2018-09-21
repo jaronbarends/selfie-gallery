@@ -10,7 +10,7 @@
 	//io is a bit of a strange name, but it's being used in examples everywhere,
 	//so let's stick to that.
 
-	const imgHolder = document.getElementById('captured-img-holder'),
+	const imgHolder = document.getElementById('captured-img-holder-1'),
 		qrBox = document.getElementById('qr-box'),
 		holderHeight = imgHolder.offsetHeight;
 
@@ -20,18 +20,20 @@
 	* @returns {undefined}
 	*/
 	const imageDataTransferHandler = function(data) {
-		console.log('transfer');
-		document.getElementById('captured-img').setAttribute('src', data.imgData);
+		document.getElementById('captured-img-1').setAttribute('src', data.imgData);
+		document.getElementById('personal-info__name-1').innerText = data.name;
+		document.getElementById('personal-info__company-1').innerText = data.company;
 	};
 
 
 	/**
-	* show the image
+	* Swipe is confirmed - show the image and personal info
 	* @returns {undefined}
 	*/
 	const imageTransferHandler = function() {
 		imgHolder.classList.add('captured-img-holder--received');
 		qrBox.classList.add('qr-box--received');
+		document.getElementById('personal-info-1').classList.add('personal-info--received');
 	};
 
 		
@@ -45,6 +47,7 @@
 		qrBox.setAttribute('style', `--y: 0`);
 		imgHolder.classList.remove('captured-img-holder--received');
 		qrBox.classList.remove('qr-box--received');
+		document.getElementById('personal-info-1').classList.remove('personal-info--received');
 	};
 
 

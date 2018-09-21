@@ -9,23 +9,24 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	
 	<link rel="stylesheet" href="css/shared.css">
-	<link rel="stylesheet" href="css/camera.css">
+	<link rel="stylesheet" href="css/camera.css?a=12">
 </head>
 <body>
 	<div class="o-content-width">
 
-		<form action="">
+		<form id="image-form" action="">
 
 			<div class="img-area" id="img-area">
 				<div id="swipe-area" class="swipe-area">
 					<img src="" id="captured-img" class="captured-img">
 
-					
-					<div class="o-form-row">
-						<label for="name">My name is</label><input type="text" id="name" name="name" placeholder=" " autofocus>
-					</div>
-					<div class="o-form-row">
-						<label for="company">I work for</label><input type="text" id="company" name="company" placeholder=" ">
+					<div id="name-and-company" class="name-and-company">
+						<div class="o-form-row">
+							<label for="name">My name is</label><input type="text" id="name" name="name" placeholder=" " size="" autofocus>
+						</div>
+						<div class="o-form-row">
+							<label for="company">and I work for</label><input type="text" id="company" name="company" placeholder=" ">
+						</div>
 					</div>
 				</div>
 

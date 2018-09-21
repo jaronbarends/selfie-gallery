@@ -2,6 +2,7 @@
 	
 	
 	const btnArea = document.getElementById('btn-area');
+	const nameAndCompany = document.getElementById('name-and-company');
 	const imageLoadedClass = 'body--image-is-loaded';
 
 	const log = function(msg) {
@@ -13,46 +14,6 @@
 	}
 	
 
-	/**
-	* reduce the image size
-	* @returns {undefined}
-	*/
-	const getDataForSmallerImg = function(img) {
-		// var canvas = document.createElement("canvas");
-		// canvas = document.getElementById('my-canvas');
-		// var ctx = canvas.getContext("2d");
-		// ctx.drawImage(img, 0, 0);
-
-		// var MAX_WIDTH = 80;
-		// var MAX_HEIGHT = 60;
-		// var width = img.width;
-		// var height = img.height;
-
-		// if (width > height) {
-		//     if (width > MAX_WIDTH) {
-		//         height *= MAX_WIDTH / width;
-		//         width = MAX_WIDTH;
-		//     }
-		// } else {
-		//     if (height > MAX_HEIGHT) {
-		//         width *= MAX_HEIGHT / height;
-		//         height = MAX_HEIGHT;
-		//     }
-		// }
-		// canvas.width = width;
-		// canvas.height = height;
-
-		// log(`width: ${width}; height: ${height}`);
-		// var ctx = canvas.getContext("2d");
-		// // ctx.drawImage(img, 0, 0, width, height);
-		// ctx.drawImage(img, 0, 0, 45, 60);
-
-		// var imgData = canvas.toDataURL("image/png");
-		// // console.log('smaller:', imgData);
-
-		// return imgData;
-	};
-	
 
 	/**
 	* convert the input image to data-url
@@ -138,24 +99,57 @@
 	};
 
 
+	/**
+	* 
+	* @returns {undefined}
+	*/
+	const hideNameAndCompany = function() {
+		nameAndCompany.classList.add('name-and-company--is-hidden');
+	};
+
+
+	/**
+	* 
+	* @returns {undefined}
+	*/
+	const showNameAndCompany = function() {
+		nameAndCompany.classList.remove('name-and-company--is-hidden');
+	};
+	
+
+	/**
+	* handle new image from camera or file
+	* @returns {undefined}
+	*/
+	const newImageHandler = function(e, source) {
+		hideBtnArea();
+		hideNameAndCompany();
+
+		if (source === 'camera') {
+			processImageFromCamera(e);
+		} else if (source === 'file') {
+			processImageFromFile(e);
+		}
+	};
+	
+
+
 
 	/**
 	* handle newly captured image
 	* @returns {undefined}
 	*/
 	const newImageFromFileHandler = function(e) {
-		hideBtnArea();
-		processImageFromFile(e);
+		newImageHandler(e, 'file');
 	};
-
-
+	
+	
 	/**
-	* handle newly captured image
-	* @returns {undefined}
-	*/
-	const imageFromCameraHandler = function(e) {
-		hideBtnArea();
-		processImageFromCamera(e);
+	 * handle newly captured image
+	 * @returns {undefined}
+	 */
+	const newImageFromCameraHandler = function(e) {
+		newImageHandler(e, 'camera');
 	};
 
 
@@ -169,7 +163,9 @@
 		// make body trigger event so other scripts on this page can listen for it
 		const newimagedataEvent = new CustomEvent('newimagedata', {
 			detail: {
-				imgData
+				imgData,
+				name: document.getElementById('name').value,
+				company: document.getElementById('company').value,
 			}
 		});
 		document.body.dispatchEvent(newimagedataEvent);
@@ -196,7 +192,7 @@
 	var connectionReadyHandler = function(e, io) {
 		if (io) {
 			document.getElementById('file-input-desktop').addEventListener('change', newImageFromFileHandler);
-			document.getElementById('file-input-camera').addEventListener('change', imageFromCameraHandler);
+			document.getElementById('file-input-camera').addEventListener('change', newImageFromCameraHandler);
 			io.on('removeimage', removeImageHandler);
 		}
 	};
