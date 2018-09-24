@@ -13,7 +13,7 @@ body {
 .o-content-width {
 	width: 375px;
 	height: 550px;
-	border: 1px dashed;
+	/* border: 1px dashed; */
 }
 
 .img-area,
@@ -372,6 +372,13 @@ input[type="text"] {
 
 input[type="text"]:placeholder-shown {
 	border-bottom-color: currentColor;
+}
+
+input[type="submit"] {
+	/* submit button needs to be present in order for submithandler to work *
+	/* but we don't want to see it */
+	position: absolute;
+	transform: translateX(-10000px);
 }
 
 .desktop-debug {

@@ -181,6 +181,18 @@
 		showBtnArea();
 		document.body.classList.add(imageLoadedClass);
 	};
+
+
+	/**
+	* make submit of form open camera
+	* @returns {undefined}
+	*/
+	const submitHandler = function(e) {
+		console.log('submit');
+		e.preventDefault();
+		document.getElementById('file-input-camera').click();
+	};
+	
 	
 
 	/**
@@ -194,6 +206,7 @@
 			document.getElementById('file-input-desktop').addEventListener('change', newImageFromFileHandler);
 			document.getElementById('file-input-camera').addEventListener('change', newImageFromCameraHandler);
 			io.on('removeimage', removeImageHandler);
+			document.getElementById('image-form').addEventListener('submit', submitHandler);
 		}
 	};
 
