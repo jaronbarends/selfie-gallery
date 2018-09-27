@@ -10,9 +10,35 @@
 	//io is a bit of a strange name, but it's being used in examples everywhere,
 	//so let's stick to that.
 
-	const imgHolder = document.getElementById('captured-img-holder');
-	const qrBox = document.getElementById('qr-box');
+	// const imgHolder = document.getElementById('captured-img-holder');
+	// const qrBox = document.getElementById('qr-box');
 	const cloneSrc = document.getElementById('clone-src');
+
+
+	/**
+	* get elements of dynamic frame
+	* @returns {object} an object containing all elements
+	*/
+	const getImgFrame = function(id) {
+		const imgFrame = document.querySelector(`[data-dynamic-frame-id="${id}"]`);
+		const imgHolder = imgFrame.querySelector('.captured-img-holder');
+		const img = imgFrame.querySelector('.captured-img');
+		const personalInfo = imgFrame.querySelector('.personal-info')
+		const name = imgFrame.querySelector('.personal-info__name');
+		const company = imgFrame.querySelector('.personal-info__company');
+		const qrBox = imgFrame.querySelector('.qr-box');
+
+		return {
+			elm: imgFrame,
+			imgHolder,
+			img,
+			personalInfo,
+			name,
+			company,
+			qrBox
+		};
+	};
+
 
 	/**
 	* handle receiving image data - load image, but don't show it yet
@@ -20,10 +46,10 @@
 	*/
 	const imageDataTransferHandler = function(data) {
 		// TODO: get id from data
-		const imgFrame = document.querySelector('[data-dynamic-frame-id="-1"]');
-		imgFrame.querySelector('.captured-img').setAttribute('src', data.imgData);
-		imgFrame.querySelector('.personal-info__name').innerText = data.name;
-		imgFrame.querySelector('.personal-info__company').innerText = data.company;
+		const imgFrame = getImgFrame(-1);
+		imgFrame.img.setAttribute('src', data.imgData);
+		imgFrame.name.innerText = data.name;
+		imgFrame.company.innerText = data.company;
 	};
 
 
@@ -32,10 +58,11 @@
 	* @returns {undefined}
 	*/
 	const imageTransferHandler = function() {
-		const imgFrame = document.querySelector('[data-dynamic-frame-id="-1"]');
-		imgFrame.querySelector('.captured-img-holder').classList.add('captured-img-holder--received');
-		imgFrame.querySelector('.qr-box').classList.add('qr-box--received');
-		imgFrame.querySelector('.personal-info').classList.add('personal-info--received');
+		// TODO: get id
+		const imgFrame = getImgFrame(-1);
+		imgFrame.imgHolder.classList.add('captured-img-holder--received');
+		imgFrame.qrBox.classList.add('qr-box--received');
+		imgFrame.personalInfo.classList.add('personal-info--received');
 	};
 
 		
@@ -44,12 +71,14 @@
 	* @returns {undefined}
 	*/
 	const removeImageHandler = function() {
+		// TODO: get id
+		const imgFrame = getImgFrame(-1);
 		// reset css vars so imgHolder and qrBox go to right positions
-		imgHolder.setAttribute('style', `--y: 100%`);
-		qrBox.setAttribute('style', `--y: 0`);
-		imgHolder.classList.remove('captured-img-holder--received');
-		qrBox.classList.remove('qr-box--received');
-		document.getElementById('personal-info').classList.remove('personal-info--received');
+		imgFrame.imgHolder.setAttribute('style', `--y: 100%`);
+		imgFrame.qrBox.setAttribute('style', `--y: 0`);
+		imgFrame.imgHolder.classList.remove('captured-img-holder--received');
+		imgFrame.qrBox.classList.remove('qr-box--received');
+		imgFrame.personalInfo.classList.remove('personal-info--received');
 	};
 
 
@@ -58,12 +87,14 @@
 	* @returns {undefined}
 	*/
 	const handleSwipe = function(data) {
-		const yPercImg = 100 + (100 * data.yFraction),
-			yPercQR = 100 * data.yFraction;
+		// TODO: get id
+		const imgFrame = getImgFrame(-1);
+		const yPercImg = 100 + (100 * data.yFraction);
+		const yPercQR = 100 * data.yFraction;
 
 		if (yPercImg > 0) {
-			imgHolder.setAttribute('style', `--y: ${yPercImg}%`);
-			qrBox.setAttribute('style', `--y: ${yPercQR}%`);
+			imgFrame.imgHolder.setAttribute('style', `--y: ${yPercImg}%`);
+			imgFrame.qrBox.setAttribute('style', `--y: ${yPercQR}%`);
 		}
 	};
 
@@ -145,7 +176,8 @@
 	*/
 	const initFrames = function() {
 		document.querySelectorAll('.img-list > li').forEach((frame) => {
-			const angle = 4*Math.random() -2;
+			const range = 3;
+			const angle = range * Math.random() - 0.5 * range;
 			frame.setAttribute('style', 'transform: rotate('+angle+'deg);');
 		});
 	};
