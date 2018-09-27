@@ -382,5 +382,5 @@ input[type="submit"] {
 }
 
 .desktop-debug {
-	display: none;
+	/* display: none; */
 }

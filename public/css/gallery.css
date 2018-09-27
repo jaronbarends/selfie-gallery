@@ -1,6 +1,6 @@
 .o-content-width {
 	margin: 1em auto;
-	max-width: 70em;
+	max-width: 90em;
 }
 
 .img-list {
@@ -8,11 +8,13 @@
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: space-around;
+	justify-content: flex-start;
 }
 
 .img-frame {
 	position: relative;
 	margin: 20px;
+	margin: 20px 30px;
 	width: 200px;
 	padding: 2rem 2rem 4rem;
 	border: 5px solid #666;
@@ -40,7 +42,7 @@
 	border: 2px solid #666;
 }
 
-.img-frame--dynamic .img-holder {
+.img-holder--dynamic {
 	position: relative;/* so we can position qr-box and img at (0.0) */
 	height: 100%;
 }
@@ -75,6 +77,11 @@
 
 .personal-info__company {
 	font-size: 1rem;
+}
+
+.clone-src {
+	/* display: none; */
+	opacity: 0.5;
 }
 
 @keyframes move-in-img {

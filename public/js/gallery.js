@@ -10,19 +10,20 @@
 	//io is a bit of a strange name, but it's being used in examples everywhere,
 	//so let's stick to that.
 
-	const imgHolder = document.getElementById('captured-img-holder-1'),
-		qrBox = document.getElementById('qr-box'),
-		holderHeight = imgHolder.offsetHeight;
-
+	const imgHolder = document.getElementById('captured-img-holder');
+	const qrBox = document.getElementById('qr-box');
+	const cloneSrc = document.getElementById('clone-src');
 
 	/**
 	* handle receiving image data - load image, but don't show it yet
 	* @returns {undefined}
 	*/
 	const imageDataTransferHandler = function(data) {
-		document.getElementById('captured-img-1').setAttribute('src', data.imgData);
-		document.getElementById('personal-info__name-1').innerText = data.name;
-		document.getElementById('personal-info__company-1').innerText = data.company;
+		// TODO: get id from data
+		const imgFrame = document.querySelector('[data-dynamic-frame-id="-1"]');
+		imgFrame.querySelector('.captured-img').setAttribute('src', data.imgData);
+		imgFrame.querySelector('.personal-info__name').innerText = data.name;
+		imgFrame.querySelector('.personal-info__company').innerText = data.company;
 	};
 
 
@@ -31,9 +32,10 @@
 	* @returns {undefined}
 	*/
 	const imageTransferHandler = function() {
-		imgHolder.classList.add('captured-img-holder--received');
-		qrBox.classList.add('qr-box--received');
-		document.getElementById('personal-info-1').classList.add('personal-info--received');
+		const imgFrame = document.querySelector('[data-dynamic-frame-id="-1"]');
+		imgFrame.querySelector('.captured-img-holder').classList.add('captured-img-holder--received');
+		imgFrame.querySelector('.qr-box').classList.add('qr-box--received');
+		imgFrame.querySelector('.personal-info').classList.add('personal-info--received');
 	};
 
 		
@@ -47,7 +49,7 @@
 		qrBox.setAttribute('style', `--y: 0`);
 		imgHolder.classList.remove('captured-img-holder--received');
 		qrBox.classList.remove('qr-box--received');
-		document.getElementById('personal-info-1').classList.remove('personal-info--received');
+		document.getElementById('personal-info').classList.remove('personal-info--received');
 	};
 
 
@@ -64,6 +66,21 @@
 			qrBox.setAttribute('style', `--y: ${yPercQR}%`);
 		}
 	};
+
+
+	/**
+	* add dynamic image frame
+	* @returns {undefined}
+	*/
+	const addDynamicFrame = function() {
+		const newFrame = cloneSrc.cloneNode(true);
+		const parentNode = cloneSrc.parentNode;
+
+		// remove/adjust id attributes
+		newFrame.removeAttribute('id');
+		parentNode.insertBefore(newFrame, cloneSrc);
+	};
+	
 
 
 	/**
@@ -105,6 +122,7 @@
 	var initHub = function() {
 		initSocketListeners();
 		joinRoom();
+		// addDynamicFrame();
 	};
 
 	
