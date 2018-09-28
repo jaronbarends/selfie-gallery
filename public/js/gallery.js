@@ -12,8 +12,8 @@
 
 	// const imgHolder = document.getElementById('captured-img-holder');
 	// const qrBox = document.getElementById('qr-box');
-	const cloneSrc = document.getElementById('clone-src');
-
+	
+	let frameCounter = 0;
 
 	/**
 	* get elements of dynamic frame
@@ -46,7 +46,7 @@
 	*/
 	const imageDataTransferHandler = function(data) {
 		// TODO: get id from data
-		const imgFrame = getImgFrame(-1);
+		const imgFrame = getImgFrame(frameCounter);
 		imgFrame.img.setAttribute('src', data.imgData);
 		imgFrame.name.innerText = data.name;
 		imgFrame.company.innerText = data.company;
@@ -59,10 +59,12 @@
 	*/
 	const imageTransferHandler = function() {
 		// TODO: get id
-		const imgFrame = getImgFrame(-1);
+		const imgFrame = getImgFrame(frameCounter);
 		imgFrame.imgHolder.classList.add('captured-img-holder--received');
 		imgFrame.qrBox.classList.add('qr-box--received');
 		imgFrame.personalInfo.classList.add('personal-info--received');
+
+		setTimeout(addDynamicFrame, 1000);
 	};
 
 		
@@ -72,13 +74,15 @@
 	*/
 	const removeImageHandler = function() {
 		// TODO: get id
-		const imgFrame = getImgFrame(-1);
+		const imgFrame = getImgFrame(frameCounter-1);
 		// reset css vars so imgHolder and qrBox go to right positions
 		imgFrame.imgHolder.setAttribute('style', `--y: 100%`);
 		imgFrame.qrBox.setAttribute('style', `--y: 0`);
 		imgFrame.imgHolder.classList.remove('captured-img-holder--received');
 		imgFrame.qrBox.classList.remove('qr-box--received');
 		imgFrame.personalInfo.classList.remove('personal-info--received');
+
+		removeDynamicFrame();
 	};
 
 
@@ -104,13 +108,30 @@
 	* @returns {undefined}
 	*/
 	const addDynamicFrame = function() {
-		const newFrame = cloneSrc.cloneNode(true);
+		const cloneSrc = document.getElementById('clone-src');
 		const parentNode = cloneSrc.parentNode;
+		const newFrame = cloneSrc.cloneNode(true);
+		frameCounter++;
 
 		// remove/adjust id attributes
 		newFrame.removeAttribute('id');
+		newFrame.setAttribute('data-dynamic-frame-id', frameCounter);
+		newFrame.classList.remove('clone-src');
+
 		parentNode.insertBefore(newFrame, cloneSrc);
 	};
+
+
+	/**
+	* remove the last dynamic frame
+	* @returns {undefined}
+	*/
+	const removeDynamicFrame = function() {
+		const imgFrame = getImgFrame(frameCounter);
+		imgFrame.elm.remove();
+		frameCounter--;
+	};
+	
 	
 
 
@@ -153,7 +174,7 @@
 	var initHub = function() {
 		initSocketListeners();
 		joinRoom();
-		// addDynamicFrame();
+		addDynamicFrame();
 	};
 
 	

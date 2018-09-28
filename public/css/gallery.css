@@ -80,8 +80,8 @@
 }
 
 .clone-src {
-	/* display: none; */
-	opacity: 0.5;
+	display: none;
+	/* opacity: 0.5; */
 }
 
 @keyframes move-in-img {
