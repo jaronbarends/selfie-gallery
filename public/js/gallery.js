@@ -113,7 +113,6 @@
 	*/
 	const addDynamicFrame = function() {
 		// sometimes too many dynamic frames are added, so check if last one isn't empty
-		console.log('add dyn');
 		const lastFrame = getImgFrame(frameCounter);
 		if (!lastFrame || lastFrame.imgHolder.classList.contains('captured-img-holder--received')) {
 			const cloneSrc = document.getElementById('clone-src');
@@ -128,8 +127,6 @@
 			newFrame.classList.remove('clone-src');
 
 			parentNode.insertBefore(newFrame, cloneSrc);
-		} else {
-			console.log('last was empty');
 		}
 	};
 
