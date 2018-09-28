@@ -92,7 +92,7 @@
 	*/
 	const handleSwipe = function(data) {
 		// TODO: get id
-		const imgFrame = getImgFrame(-1);
+		const imgFrame = getImgFrame(frameCounter);
 		const yPercImg = 100 + (100 * data.yFraction);
 		const yPercQR = 100 * data.yFraction;
 
@@ -108,6 +108,7 @@
 	* @returns {undefined}
 	*/
 	const addDynamicFrame = function() {
+		console.log('add dyn');
 		const cloneSrc = document.getElementById('clone-src');
 		const parentNode = cloneSrc.parentNode;
 		const newFrame = cloneSrc.cloneNode(true);
