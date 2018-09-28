@@ -45,6 +45,7 @@
 .img-holder--dynamic {
 	position: relative;/* so we can position qr-box and img at (0.0) */
 	height: 100%;
+	min-height: 261px;
 }
 
 .img-frame img,
