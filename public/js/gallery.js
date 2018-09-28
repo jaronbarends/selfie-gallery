@@ -21,22 +21,26 @@
 	*/
 	const getImgFrame = function(id) {
 		const imgFrame = document.querySelector(`[data-dynamic-frame-id="${id}"]`);
-		const imgHolder = imgFrame.querySelector('.captured-img-holder');
-		const img = imgFrame.querySelector('.captured-img');
-		const personalInfo = imgFrame.querySelector('.personal-info')
-		const name = imgFrame.querySelector('.personal-info__name');
-		const company = imgFrame.querySelector('.personal-info__company');
-		const qrBox = imgFrame.querySelector('.qr-box');
+		if (!imgFrame) {
+			return null;
+		} else {
+			const imgHolder = imgFrame.querySelector('.captured-img-holder');
+			const img = imgFrame.querySelector('.captured-img');
+			const personalInfo = imgFrame.querySelector('.personal-info')
+			const name = imgFrame.querySelector('.personal-info__name');
+			const company = imgFrame.querySelector('.personal-info__company');
+			const qrBox = imgFrame.querySelector('.qr-box');
 
-		return {
-			elm: imgFrame,
-			imgHolder,
-			img,
-			personalInfo,
-			name,
-			company,
-			qrBox
-		};
+			return {
+				elm: imgFrame,
+				imgHolder,
+				img,
+				personalInfo,
+				name,
+				company,
+				qrBox
+			};
+		}
 	};
 
 
@@ -108,18 +112,25 @@
 	* @returns {undefined}
 	*/
 	const addDynamicFrame = function() {
+		// sometimes too many dynamic frames are added, so check if last one isn't empty
 		console.log('add dyn');
-		const cloneSrc = document.getElementById('clone-src');
-		const parentNode = cloneSrc.parentNode;
-		const newFrame = cloneSrc.cloneNode(true);
-		frameCounter++;
+		const lastFrame = getImgFrame(frameCounter);
+		if (!lastFrame || lastFrame.imgHolder.classList.contains('captured-img-holder--received')) {
+			const cloneSrc = document.getElementById('clone-src');
+			const parentNode = cloneSrc.parentNode;
+			const newFrame = cloneSrc.cloneNode(true);
 
-		// remove/adjust id attributes
-		newFrame.removeAttribute('id');
-		newFrame.setAttribute('data-dynamic-frame-id', frameCounter);
-		newFrame.classList.remove('clone-src');
+			frameCounter++;
 
-		parentNode.insertBefore(newFrame, cloneSrc);
+			// remove/adjust id attributes
+			newFrame.removeAttribute('id');
+			newFrame.setAttribute('data-dynamic-frame-id', frameCounter);
+			newFrame.classList.remove('clone-src');
+
+			parentNode.insertBefore(newFrame, cloneSrc);
+		} else {
+			console.log('last was empty');
+		}
 	};
 
 
