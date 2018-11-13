@@ -211,6 +211,20 @@
 			frame.setAttribute('style', 'transform: rotate('+angle+'deg);');
 		});
 	};
+
+
+	/**
+	* 
+	* @returns {undefined}
+	*/
+	const initResetBtn = function() {
+		const btn = document.getElementById(`btn-reset`);
+		btn.addEventListener('click', (e) => {
+			e.preventDefault();
+			window.location.reload();
+		})
+	};
+	
 	
 	
 	/**
@@ -222,6 +236,7 @@
 	var init = function() {
 		initFrames();
 		$(document).on('connectionready.socket', connectionReadyHandler);
+		initResetBtn();
 	};
 
 	document.addEventListener('DOMContentLoaded', init);
