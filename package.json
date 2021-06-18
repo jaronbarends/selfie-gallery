@@ -1,7 +1,7 @@
 {
-  "name": "websocket-orientation-basics",
+  "name": "selfie-gallery",
   "version": "0.0.1",
-  "description": "remote devices with sockets",
+  "description": "swipe selfies from device to online gallery",
   "dependencies": {
     "express": "^4.16.3",
     "socket.io": "^2.1.1"
