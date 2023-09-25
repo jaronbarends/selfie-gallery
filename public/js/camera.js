@@ -54,7 +54,7 @@
 
 			if (img.tagName.toLowerCase() === 'canvas') {
 				imgData = img.toDataURL("image/png");
-				console.log(imgData);
+				// console.log(imgData);
 				capturedImg.src = imgData;
 			}
 			// console.log(metaData);
@@ -71,11 +71,13 @@
 			callback = processImageHandler,
 			options = {
 				maxWidth: 200,
-				orientation: true,
-				meta: true,
-				canvas: false
+				orientation: 1,
+				// orientation: true,
+				// meta: true,
+				// canvas: false
 			};
 
+		//https://github.com/blueimp/JavaScript-Load-Image
 		loadImage(file, callback, options);
 	};
 

@@ -52,6 +52,7 @@ body {
 	height: auto;
 	opacity: 0;
 	transition: opacity 0.3s;
+	image-orientation: from-image;
 }
 
 .body--image-is-loaded .swipe-area .captured-img {

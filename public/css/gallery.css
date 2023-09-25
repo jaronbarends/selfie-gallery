@@ -23,6 +23,7 @@
 	transform-origin: top center;
 	background: white;
 	transition: transform 0.4s;
+	image-orientation: from-image;
 }
 
 .img-frame::after {
