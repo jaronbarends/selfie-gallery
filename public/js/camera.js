@@ -78,6 +78,8 @@
 			};
 
 		//https://github.com/blueimp/JavaScript-Load-Image
+		// somehow, the old 2019 version works; the new 2023 version does not show image
+		// haven't really investigated, just reverted to old version
 		loadImage(file, callback, options);
 	};
 
