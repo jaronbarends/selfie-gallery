@@ -2,7 +2,7 @@
 	
 	
 	const btnArea = document.getElementById('btn-area');
-	const nameAndCompany = document.getElementById('name-and-company');
+	const personalInfo = document.getElementById('personal-info');
 	const imageLoadedClass = 'body--image-is-loaded';
 
 	const log = function(msg) {
@@ -107,8 +107,8 @@
 	* 
 	* @returns {undefined}
 	*/
-	const hideNameAndCompany = function() {
-		nameAndCompany.classList.add('name-and-company--is-hidden');
+	const hidepersonalInfo = function() {
+		personalInfo.classList.add('personal-info--is-hidden');
 	};
 
 	/**
@@ -117,7 +117,7 @@
 	*/
 	const newImageHandler = function(e, source) {
 		hideBtnArea();
-		hideNameAndCompany();
+		hidepersonalInfo();
 
 		if (source === 'camera') {
 			processImageFromCamera(e);

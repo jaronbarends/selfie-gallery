@@ -337,12 +337,12 @@ body {
 	opacity: 0;
 }
 
-.name-and-company {
+.personal-info {
 	margin: 0 auto;
 	width: var(--input-w);
 }
 
-.name-and-company--is-hidden {
+.personal-info--is-hidden {
 	display: none;
 }
 

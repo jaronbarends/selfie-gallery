@@ -47,3 +47,7 @@ this line can be  put into package.json under "scripts"
 uses the library https://github.com/blueimp/JavaScript-Load-Image for processing images from camera.
 When updating the 2019 version of the lib to v5.16 in 2023, I didn't get an image. Haven't bothered debugging, just reverted back to the older version.
 Images showed up rotated in camera.html; setting `{orientation: 1}` in `processImageFromCamera` fixed that
+
+## TODO
+
+prevent camera.html from scrolling; when you add `overflow: hidden` to `body`, images that are partly swiped to gallery and then swiped back will still trigger transfer

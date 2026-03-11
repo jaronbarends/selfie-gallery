@@ -28,7 +28,6 @@
 			const img = imgFrame.querySelector('.captured-img');
 			const personalInfo = imgFrame.querySelector('.personal-info')
 			const name = imgFrame.querySelector('.personal-info__name');
-			// const company = imgFrame.querySelector('.personal-info__company');
 			const qrBox = imgFrame.querySelector('.qr-box');
 
 			return {
@@ -37,7 +36,6 @@
 				img,
 				personalInfo,
 				name,
-				// company,
 				qrBox
 			};
 		}
