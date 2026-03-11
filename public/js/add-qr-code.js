@@ -10,16 +10,13 @@
 	* @returns {undefined}
 	*/
 	var addRemoteQRCode = function() {
-		var url = window.location.href,
-			arr = url.split('/'),
-			remoteUrl = arr[0]+'//'+arr[2]+'/camera.html',
-			qrSrc = 'https://chart.googleapis.com/chart?chs=250x250&cht=qr&chl='+encodeURIComponent(remoteUrl),
-			$qrElm = $('#qr-code');
+		const url = window.location.href;
+		const arr = url.split('/');
+		const remoteUrl = arr[0]+'//'+arr[2]+'/camera.html';
+		const qrSrc = 'https://api.qrserver.com/v1/create-qr-code/?size=250x250&margin=20&data='+encodeURIComponent(remoteUrl);
+		const $qrElm = $('#qr-code');
 
-			// console.log(remoteUrl);
-		
 		$qrElm.append('<img src="'+qrSrc+'">');
-		// $qrElm.append('<br><a href="'+remoteUrl+'">'+remoteUrl+'</a>');
 	};
 
 

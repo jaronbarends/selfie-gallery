@@ -18,16 +18,21 @@ The socket-server serves files in the _public_ directory and handles traffic bet
 
 ## Development
 
-connecting mobile device to localhost
-from https://www.linkedin.com/pulse/how-access-localhost-other-devices-mobile-laptop-harsh-verma/
+### Connecting mobile device to localhost
 
+#### Connect using ngrok
+install ngrok locally; then use `ngrok http 3000`
+
+#### Connect directly
 Make sure the computer and device are connected to the same network
 
 In windows: windows + r to run command
-`ipconfig | findstr /i “ipv4”`
+`ipconfig | findstr /i "ipv4"`
 
 copy the ip address; (e.g. 123.45.67.890)
 point browser to port 3000 on that ip address http://123.45.67.890:3000
+
+(the command may not work in some terminals like Cmder. In that case you can just use `ipconfig` and search for the IPv4 Address)
 
 
 
