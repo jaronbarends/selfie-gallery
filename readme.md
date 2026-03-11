@@ -34,7 +34,9 @@ point browser to port 3000 on that ip address http://123.45.67.890:3000
 
 (the command may not work in some terminals like Cmder. In that case you can just use `ipconfig` and search for the IPv4 Address)
 
+## Deploying
 
+I am hosting this app on fly.io. To deploy, you'll need to install their cli https://fly.io/docs/flyctl/install/; then launch with `fly launch`
 
 ## Troubleshooting
 

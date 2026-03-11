@@ -7,10 +7,13 @@
     "socket.io": "^2.5.1"
   },
   "engines": {
-    "node": "8.11.x"
+    "node": "24.x"
   },
   "scripts": {
     "preinstall": "npm install --save socket.io --msvs_version=2013",
     "start": "node socket-server.js"
+  },
+  "devDependencies": {
+    "@flydotio/dockerfile": "^0.7.10"
   }
 }
