@@ -28,7 +28,7 @@
 			const img = imgFrame.querySelector('.captured-img');
 			const personalInfo = imgFrame.querySelector('.personal-info')
 			const name = imgFrame.querySelector('.personal-info__name');
-			const company = imgFrame.querySelector('.personal-info__company');
+			// const company = imgFrame.querySelector('.personal-info__company');
 			const qrBox = imgFrame.querySelector('.qr-box');
 
 			return {
@@ -37,7 +37,7 @@
 				img,
 				personalInfo,
 				name,
-				company,
+				// company,
 				qrBox
 			};
 		}
@@ -53,7 +53,6 @@
 		const imgFrame = getImgFrame(frameCounter);
 		imgFrame.img.setAttribute('src', data.imgData);
 		imgFrame.name.innerText = data.name;
-		imgFrame.company.innerText = data.company;
 	};
 
 

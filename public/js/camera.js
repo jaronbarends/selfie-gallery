@@ -111,16 +111,6 @@
 		nameAndCompany.classList.add('name-and-company--is-hidden');
 	};
 
-
-	/**
-	* 
-	* @returns {undefined}
-	*/
-	const showNameAndCompany = function() {
-		nameAndCompany.classList.remove('name-and-company--is-hidden');
-	};
-	
-
 	/**
 	* handle new image from camera or file
 	* @returns {undefined}
@@ -169,7 +159,6 @@
 			detail: {
 				imgData,
 				name: document.getElementById('name').value,
-				company: document.getElementById('company').value,
 			}
 		});
 		document.body.dispatchEvent(newimagedataEvent);
