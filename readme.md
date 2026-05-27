@@ -14,23 +14,25 @@ The root folder contains the node-server (_socket-server.js_) and the npm stuff.
 
 This is the server you run to serve the pages: `node socket-server` or run _START SOCKET SERVER.bat_ which executes the same command
 
-The socket-server serves files in the _public_ directory and handles traffic between sockets. Sockets can send events to the socket-server, and then you can add code to the server to handle that event. 
+The socket-server serves files in the _public_ directory and handles traffic between sockets. Sockets can send events to the socket-server, and then you can add code to the server to handle that event.
 
 ## Development
 
 ### Connecting mobile device to localhost
 
 #### Connect using ngrok
+
 install ngrok locally; then use `ngrok http 3000`
 
 #### Connect directly
+
 Make sure the computer and device are connected to the same network
 
 In windows: windows + r to run command
 `ipconfig | findstr /i "ipv4"`
 
 copy the ip address; (e.g. 123.45.67.890)
-point browser to port 3000 on that ip address http://123.45.67.890:3000
+point browser to port 3000 on that ip address, e.g. http://192.168.1.85:3000/
 
 (the command may not work in some terminals like Cmder. In that case you can just use `ipconfig` and search for the IPv4 Address)
 
@@ -40,9 +42,9 @@ I am hosting this app on fly.io. To deploy, you'll need to install their cli htt
 
 ## Troubleshooting
 
-python needs ms Visual Studio. Default is 2010, but you'll have to adjust this to your own version: 
- npm install --save socket.io --msvs_version=2013
-this line can be  put into package.json under "scripts"
+python needs ms Visual Studio. Default is 2010, but you'll have to adjust this to your own version:
+npm install --save socket.io --msvs_version=2013
+this line can be put into package.json under "scripts"
 
 uses the library https://github.com/blueimp/JavaScript-Load-Image for processing images from camera.
 When updating the 2019 version of the lib to v5.16 in 2023, I didn't get an image. Haven't bothered debugging, just reverted back to the older version.

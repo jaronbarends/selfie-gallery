@@ -28,7 +28,7 @@ var initBasicRequirements = function() {
 
 	// Initialize a new socket.io object. It is bound to 
 	// the express app, which allows them to coexist.
-	io = require('socket.io').listen(app.listen(port));
+	io = require('socket.io')(app.listen(port));
 
 	// Make the files in the public folder available to the world
 	app.use(express.static(__dirname + '/public'));
@@ -73,7 +73,7 @@ var disconnectHandler = function(socket) {
 	//rooms contains an object for every socket, and one for every room
 	//sids only contains an object for every socket.
 	//so the ones that are in rooms but not in sids are the rooms the socket was in.
-	rooms.emit('disconnect', data);
+	rooms.emit('userdisconnected', data);
 };
 
 

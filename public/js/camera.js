@@ -194,7 +194,7 @@
 	* @param {Socket} socket This client's socket
 	* @returns {undefined}
 	*/
-	var connectionReadyHandler = function(e, io) {
+	var connectionReadyHandler = function(io) {
 		if (io) {
 			document.getElementById('file-input-desktop').addEventListener('change', newImageFromFileHandler);
 			document.getElementById('file-input-camera').addEventListener('change', newImageFromCameraHandler);
@@ -208,7 +208,10 @@
 	* @returns {undefined}
 	*/
 	const init = function() {
-		$(document).on('connectionready.socket', connectionReadyHandler);
+		// $(document).on('connectionready.socket', connectionReadyHandler);
+		document.addEventListener('connectionready.socket', (e) => {
+			connectionReadyHandler(e.detail);
+		});
 
 	};
 

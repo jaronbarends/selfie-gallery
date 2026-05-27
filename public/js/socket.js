@@ -1,43 +1,38 @@
-(function($) {
+'use strict';
 
-	'use strict';
+/* global io */ //global io is defined by socket.io
 
-	/* global io */ //global io is defined by socket.io
-
-	// define semi-global variables (vars that are "global" in this file's scope) and prefix them
-	// with sg so we can easily distinguish them from "normal" vars
-
-
-	/**
-	* handle server's connectionready event
-	* @returns {undefined}
-	*/
-	var connectionreadyHandler = function() {
-		$(document).trigger('connectionready.socket', io);
-	};
-	
-
-	/**
-	* initialize the socket, and send event containing it to the page
-	* @param {string} varname Description
-	* @returns {undefined}
-	*/
-	var initIo = function() {
-		io = io();
-		io.on('connectionready', connectionreadyHandler);
-	};
-	
-
-	/**
-	* initialize all
-	* @param {string} varname Description
-	* @returns {undefined}
-	*/
-	var init = function() {
-		initIo();
-	};
-
-	$(document).ready(init);
+// define semi-global variables (vars that are "global" in this file's scope) and prefix them
+// with sg so we can easily distinguish them from "normal" vars
+let sgSocket;
 
 
-})(jQuery);
+/**
+* handle server's connectionready event
+* @returns {undefined}
+*/
+function connectionreadyHandler() {
+	const event = new CustomEvent('connectionready.socket', { detail: sgSocket });
+	document.dispatchEvent(event);
+}
+
+
+/**
+* initialize the socket, and send event containing it to the page
+* @returns {undefined}
+*/
+function initIo() {
+	sgSocket = io();
+	sgSocket.on('connectionready', connectionreadyHandler);
+}
+
+
+/**
+* initialize all
+* @returns {undefined}
+*/
+function init() {
+	initIo();
+}
+
+document.addEventListener('DOMContentLoaded', init);
