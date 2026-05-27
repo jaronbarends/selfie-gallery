@@ -61,7 +61,7 @@ const removeImageHandler = function () {
   // TODO: get id
   const imgFrame = getImgFrame(frameCounter - 1);
   // reset css vars so imgHolder and qrBox go to right positions
-  imgFrame.imgHolder.setAttribute('style', `--y: 100%`);
+  imgFrame.imgHolder.setAttribute('style', `--y: 102%`);
   imgFrame.qrBox.setAttribute('style', `--y: 0`);
   imgFrame.imgHolder.classList.remove('captured-img-holder--received');
   imgFrame.qrBox.classList.remove('qr-box--received');
@@ -77,7 +77,11 @@ const removeImageHandler = function () {
 const handleSwipe = function (data) {
   // TODO: get id
   const imgFrame = getImgFrame(frameCounter);
-  const yPercImg = 100 + 100 * data.yFraction;
+  let yPercImg = 100 + 100 * data.yFraction;
+  if (yPercImg > 96) {
+    // swipe updates may stop at around 96%; make sure image is fully out of view
+    yPercImg = 102;
+  }
   const yPercQR = 100 * data.yFraction;
 
   if (yPercImg > 0) {

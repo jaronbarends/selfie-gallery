@@ -6,33 +6,30 @@
 // with sg so we can easily distinguish them from "normal" vars
 let sgSocket;
 
-
 /**
-* handle server's connectionready event
-* @returns {undefined}
-*/
+ * handle server's connectionready event
+ * @returns {undefined}
+ */
 function connectionreadyHandler() {
-	const event = new CustomEvent('connectionready.socket', { detail: sgSocket });
-	document.dispatchEvent(event);
+  const event = new CustomEvent('connectionready.socket', { detail: sgSocket });
+  document.dispatchEvent(event);
 }
 
-
 /**
-* initialize the socket, and send event containing it to the page
-* @returns {undefined}
-*/
+ * initialize the socket, and send event containing it to the page
+ * @returns {undefined}
+ */
 function initIo() {
-	sgSocket = io();
-	sgSocket.on('connectionready', connectionreadyHandler);
+  sgSocket = io();
+  sgSocket.on('connectionready', connectionreadyHandler);
 }
 
-
 /**
-* initialize all
-* @returns {undefined}
-*/
+ * initialize all
+ * @returns {undefined}
+ */
 function init() {
-	initIo();
+  initIo();
 }
 
 document.addEventListener('DOMContentLoaded', init);

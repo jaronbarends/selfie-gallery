@@ -45,7 +45,7 @@ body {
     justify-content: center;
     align-items: center;
     bottom: 10px;
-    right: 10px;
+    left: 10px;
     background: green;
     color: white;
     font-size: 24px;

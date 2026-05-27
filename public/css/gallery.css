@@ -1,162 +1,170 @@
 .o-content-width {
-	margin: 1em auto;
-	max-width: 90em;
+  margin: 1em auto;
+  max-width: 90em;
 }
 
 .img-list {
-	list-style: none;
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: space-around;
-	justify-content: flex-start;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  justify-content: flex-start;
 }
 
 .img-frame {
-	position: relative;
-	margin: 20px;
-	margin: 20px 30px;
-	width: 200px;
-	padding: 2rem 2rem 4rem;
-	border: 5px solid #666;
-	border-radius: 5px;
-	text-align: center;
-	transform-origin: top center;
-	background: white;
-	transition: transform 0.4s;
-	image-orientation: from-image;
+  position: relative;
+  margin: 20px;
+  margin: 20px 30px;
+  width: 200px;
+  padding: 2rem 2rem 4rem;
+  border: 5px solid #666;
+  border-radius: 5px;
+  text-align: center;
+  transform-origin: top center;
+  background: white;
+  transition: transform 0.4s;
+  image-orientation: from-image;
 }
 
 .img-frame::after {
-	display: block;
-	content: '';
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	box-shadow: 4px 4px 5px 4px rgba(0,0,0, 0.4);
-	pointer-events: none;
+  display: block;
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  box-shadow: 4px 4px 5px 4px rgba(0, 0, 0, 0.4);
+  pointer-events: none;
 }
 
 .img-holder {
-	overflow: hidden;
+  overflow: hidden;
 }
 
 .img-holder--dynamic {
-	position: relative;/* so we can position qr-box and img at (0.0) */
-	height: 100%;
-	min-height: 261px;
+  position: relative; /* so we can position qr-box and img at (0.0) */
+  height: 100%;
+  min-height: 261px;
 }
 
 .img-frame img,
 .frame {
-	display: block;
-	width: 100%;
-	height: auto;
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 .personal-info {
-	position: absolute;
-	left: 0;
-	bottom: 0.4rem;
-	width: 100%;
-	height: 2.5em;
-	background: white;
-	text-align: center;
-	font-size: 1.2rem;
-	line-height: 1.4;
-	opacity: 0;
+  position: absolute;
+  left: 0;
+  bottom: 0.4rem;
+  width: 100%;
+  height: 2.5em;
+  background: white;
+  text-align: center;
+  font-size: 1.2rem;
+  line-height: 1.4;
+  opacity: 0;
 }
 
 .personal-info--received {
-	opacity: 1;
+  opacity: 1;
 }
 
 .personal-info__name {
-	font-weight: bold;
+  font-weight: bold;
 }
 
 .clone-src {
-	display: none;
+  display: none;
 }
 
 @keyframes move-in-img {
-	0%   { transform: translate3d(0, var(--y), 0); }
-	100% { transform: translate3d(0, 0, 0) }
+  0% {
+    transform: translate3d(0, var(--y), 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
 }
 
 @keyframes move-out-qr {
-	0%   { transform: translate3d(0, var(--y), 0); }
-	100% { transform: translate3d(0, -100%, 0) }
+  0% {
+    transform: translate3d(0, var(--y), 0);
+  }
+  100% {
+    transform: translate3d(0, -100%, 0);
+  }
 }
 
 .qr-box,
 .captured-img-holder {
-	position: absolute;
-	left: 0;
-	top: 0;
-	height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
 }
 
 .qr-box {
-	--y: 0%;/* will be changed by js */
-	transform: translate3d(0, var(--y), 0);
-	text-align: center;
-	width: 100%;
+  --y: 0%; /* will be changed by js */
+  transform: translate3d(0, var(--y), 0);
+  text-align: center;
+  width: 100%;
 }
 
 .qr-box--received {
-	animation: move-out-qr 0.2s forwards;
+  animation: move-out-qr 0.2s forwards;
 }
 
 .qr-link {
-	display: flex;
-	flex-direction: column;
-	justify-content: flex-start;
-	width: 100%;
-	height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 100%;
+  height: 100%;
 }
 
 .qr-box__cta {
-	/* margin-bottom: 2em; */
+  /* margin-bottom: 2em; */
 }
 
 .qr-box__footnote {
-	color: #aaa;
-	font-size: 1.2rem;
+  color: #aaa;
+  font-size: 1.2rem;
 }
 
 .captured-img-holder {
-	--y: 100%;/* --y will be changed by js */
-	transform: translate3d(0, var(--y), 0);
+  --y: 102%; /* --y will be changed by js */
+  transform: translate3d(0, var(--y), 0);
 }
 
 .captured-img-holder--received {
-	animation: move-in-img 0.2s forwards;
+  animation: move-in-img 0.2s forwards;
 }
 
 .qr-box img,
 .captured-img-holder img {
-	border: none;
+  border: none;
 }
 
 .captured-img {
-	display: block;
-	width: 100%;
-	height: auto;
-	/* transform: translateY(40%) rotate(90deg) scale(1.333); */
-	transform: none;
-	/* filter: grayscale(1) contrast(20); */
+  display: block;
+  width: 100%;
+  height: auto;
+  /* transform: translateY(40%) rotate(90deg) scale(1.333); */
+  transform: none;
+  /* filter: grayscale(1) contrast(20); */
 }
 
 .btn--reset {
-	display: block;
-	margin: 1em auto 0;
-	border-radius: 3px;
-	padding: 1em 2em;
-	width: 5em;
-	background: #333;
-	color: white;
-	text-decoration: none;
-	text-align: center;
+  display: block;
+  margin: 1em auto 0;
+  border-radius: 3px;
+  padding: 1em 2em;
+  width: 5em;
+  background: #333;
+  color: white;
+  text-decoration: none;
+  text-align: center;
 }
