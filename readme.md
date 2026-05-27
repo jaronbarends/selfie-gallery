@@ -42,9 +42,9 @@ I am hosting this app on fly.io. To deploy, you'll need to install their cli htt
 
 ## Troubleshooting
 
-python needs ms Visual Studio. Default is 2010, but you'll have to adjust this to your own version:
-npm install --save socket.io --msvs_version=2013
-this line can be put into package.json under "scripts"
+Socket.IO v4 only requires Node.js/npm — no Python or Windows build tools needed.
+If you install packages that include native addons (compiled via node-gyp), those do require Windows build tools.
+See the [node-gyp Windows prerequisites](https://github.com/nodejs/node-gyp#on-windows) for details.
 
 uses the library https://github.com/blueimp/JavaScript-Load-Image for processing images from camera.
 When updating the 2019 version of the lib to v5.16 in 2023, I didn't get an image. Haven't bothered debugging, just reverted back to the older version.

@@ -55,7 +55,7 @@ var disconnectHandler = function (socket) {
   // console.log('\n-------------------------------------------');
   // console.log('user ' + socket.id + ' disconnected\n');
 
-  removedUser = removeUser(socket.id);
+  var removedUser = removeUser(socket.id);
   //console.log(socket.adapter);
   var data = {
     removedUser: removedUser,
