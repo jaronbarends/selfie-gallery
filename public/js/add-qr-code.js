@@ -1,6 +1,6 @@
-"use strict";
+'use strict';
 
-const sgHiddenClass = "qr-box--is-hidden";
+const sgHiddenClass = 'qr-box--is-hidden';
 
 /**
  *
@@ -9,14 +9,14 @@ const sgHiddenClass = "qr-box--is-hidden";
  */
 var addRemoteQRCode = function () {
   const url = window.location.href;
-  const arr = url.split("/");
-  const remoteUrl = arr[0] + "//" + arr[2] + "/camera.html";
+  const arr = url.split('/');
+  const remoteUrl = arr[0] + '//' + arr[2] + '/camera.html';
   const qrSrc =
-    "https://api.qrserver.com/v1/create-qr-code/?size=250x250&margin=20&data=" +
+    'https://api.qrserver.com/v1/create-qr-code/?size=250x250&margin=20&data=' +
     encodeURIComponent(remoteUrl);
-  const qrElm = document.getElementById("qr-code");
+  const qrElm = document.getElementById('qr-code');
 
-  qrElm.insertAdjacentHTML("beforeend", '<img src="' + qrSrc + '">');
+  qrElm.insertAdjacentHTML('beforeend', '<img src="' + qrSrc + '">');
 };
 
 /**
@@ -24,7 +24,7 @@ var addRemoteQRCode = function () {
  * @returns {undefined}
  */
 const newUserHandler = function () {
-  document.getElementById("qr-box").classList.add("qr-box--is-hidden");
+  document.getElementById('qr-box').classList.add('qr-box--is-hidden');
 };
 
 /**
@@ -32,18 +32,17 @@ const newUserHandler = function () {
  * @returns {undefined}
  */
 const disconnectHandler = function () {
-  document.getElementById("qr-box").classList.remove("qr-box--is-hidden");
+  document.getElementById('qr-box').classList.remove('qr-box--is-hidden');
 };
 
 /**
  * kick off the app once the socket connection is ready
- * @param {event} e The ready.socket event sent by socket js
  * @param {Socket} socket This client's socket
  * @returns {undefined}
  */
-const connectionReadyHandler = function (io) {
-  io.on("newuser", newUserHandler);
-  io.on("userdisconnected", disconnectHandler);
+const connectionReadyHandler = function (socket) {
+  socket.on('newuser', newUserHandler);
+  socket.on('userdisconnected', disconnectHandler);
 };
 
 /**
@@ -53,9 +52,9 @@ const connectionReadyHandler = function (io) {
  */
 var init = function () {
   addRemoteQRCode();
-  document.addEventListener("connectionready.socket", (e) => {
+  document.addEventListener('connectionready.socket', (e) => {
     connectionReadyHandler(e.detail);
   });
 };
 
-document.addEventListener("DOMContentLoaded", init);
+document.addEventListener('DOMContentLoaded', init);

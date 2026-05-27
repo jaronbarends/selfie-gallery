@@ -107,7 +107,6 @@ var updateusersHandler = function (socket, data) {
  * @returns {undefined}
  */
 var passThroughHandler = function (data) {
-  console.log('passThroughHandler', data);
   if (data.eventName) {
     rooms.emit(data.eventName, data.eventData);
   }

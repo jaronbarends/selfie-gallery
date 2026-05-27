@@ -1,13 +1,5 @@
 'use strict';
 
-/* global io */ //instruction for jshint
-
-//globals:
-//window.io is defined by socket.IO.
-//It represents the socket server.
-//io is a bit of a strange name, but it's being used in examples everywhere,
-//so let's stick to that.
-
 let socket;
 
 const instructionArea = document.getElementById('instruction-area'),
@@ -57,10 +49,12 @@ const initSwipe = function () {
 
   Swiped.init({
     query: '#swipe-area',
-    bottom: 400,
+    animDistanceUp: 400,
+    // animDistanceDown: 400,
+    tolerance: 100,
     onOpen: function () {
+      // user has swiped far enough to send image
       sendImage();
-      // this.destroy(true);
     },
   });
 
@@ -126,6 +120,9 @@ const removeHandler = function (evt) {
   sendEventToSockets('removeimage');
   const area = document.getElementById('swipe-area');
   area.style.transform = 'none';
+  area.classList.remove('js-swiped--will-open');
+  area.classList.remove('js-swiped--will-open-downwards');
+  area.classList.remove('js-swiped--will-open-upwards');
 };
 
 /**
@@ -140,13 +137,12 @@ const removeImageHandler = function () {
 
 /**
  * kick off the app once the socket connection is ready
- * @param {event} e The ready.socket event sent by socket js
- * @param {Socket} socket This client's socket
+ * @param {Socket} _socket This client's socket
  * @returns {undefined}
  */
-var connectionReadyHandler = function (io) {
-  if (io) {
-    socket = io;
+var connectionReadyHandler = function (_socket) {
+  if (_socket) {
+    socket = _socket;
     initSender();
 
     document.getElementById('file-input-camera').addEventListener('change', newImageHandler);
@@ -157,8 +153,8 @@ var connectionReadyHandler = function (io) {
       indicator.classList.remove(indicatorActiveClass);
     });
 
-    io.on('imagetransfer', imageSentHandler);
-    io.on('removeimage', removeImageHandler);
+    socket.on('imagetransfer', imageSentHandler);
+    socket.on('removeimage', removeImageHandler);
   }
 };
 

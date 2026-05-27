@@ -166,19 +166,18 @@ const submitHandler = function (e) {
 
 /**
  * kick off the app once the socket connection is ready
- * @param {event} e The ready.socket event sent by socket js
  * @param {Socket} socket This client's socket
  * @returns {undefined}
  */
-var connectionReadyHandler = function (io) {
-  if (io) {
+var connectionReadyHandler = function (socket) {
+  if (socket) {
     document
       .getElementById('file-input-desktop')
       .addEventListener('change', newImageFromFileHandler);
     document
       .getElementById('file-input-camera')
       .addEventListener('change', newImageFromCameraHandler);
-    io.on('removeimage', removeImageHandler);
+    socket.on('removeimage', removeImageHandler);
     document.getElementById('image-form').addEventListener('submit', submitHandler);
   }
 };

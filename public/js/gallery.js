@@ -1,16 +1,5 @@
 'use strict';
 
-/* global io */ //instruction for jshint
-
-//globals:
-//window.io is defined by socket.IO.
-//It represents the socket server.
-//io is a bit of a strange name, but it's being used in examples everywhere,
-//so let's stick to that.
-
-// const imgHolder = document.getElementById('captured-img-holder');
-// const qrBox = document.getElementById('qr-box');
-
 let frameCounter = 0;
 
 /**

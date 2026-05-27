@@ -35,10 +35,31 @@ body {
 }
 
 .swipe-area {
+  position: relative;
   margin: -20px -20px 0;
-  /* border: 5px dotted rgba(255, 255, 255, 0.4);
-	border-radius: var(--br);
-	transition: border-color 0.5s; */
+
+  &::after {
+    content: '✓';
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    bottom: 10px;
+    right: 10px;
+    background: green;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    scale: 0;
+    transition: scale 0.15s ease-in-out;
+  }
+}
+
+.swipe-area.js-swiped--will-open::after {
+  scale: 1;
 }
 
 .body--image-is-loaded .swipe-area {
