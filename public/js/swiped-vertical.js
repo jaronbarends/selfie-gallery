@@ -355,9 +355,9 @@
 
     var deltaAbs = Math.abs(this.delta);
 
-    if (deltaAbs > this.width) {
+    if (deltaAbs > this.animDistance) {
       // linear deceleration
-      this.delta = this.dir * (this.width + (deltaAbs - this.width) / 8);
+      this.delta = this.dir * (this.animDistance + (deltaAbs - this.animDistance) / 8);
     }
 
     if (this.dir * this.delta > this.threshold) {

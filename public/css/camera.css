@@ -331,7 +331,7 @@ body {
 
 .btn--remove {
   top: 320px;
-  transform: opacity 0.3s;
+  transition: opacity 0.3s;
 }
 
 .btn--is-hidden {

@@ -1,120 +1,105 @@
-<!DOCTYPE html>
+<!doctype html>
 
 <html lang="en-us">
+  <head>
+    <meta charset="utf-8" />
 
-<head>
-	<meta charset="utf-8">
+    <title>Selfie Gallery</title>
 
-	<title>Selfie Gallery</title>
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
-	<meta name="mobile-web-app-capable" content="yes">
-	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui"
+    />
 
-	<meta name="viewport"
-		content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+    <link type="text/css" rel="stylesheet" href="css/shared.css" />
+    <link type="text/css" rel="stylesheet" href="css/qr-code.css" />
+    <link type="text/css" rel="stylesheet" href="css/gallery.css" />
+  </head>
 
-	<link type="text/css" rel="stylesheet" href="css/shared.css" />
-	<link type="text/css" rel="stylesheet" href="css/qr-code.css" />
-	<link type="text/css" rel="stylesheet" href="css/gallery.css" />
+  <body>
+    <!-- <h1></h1> -->
+    <!-- all photos under Creative Commons Zero license -->
+    <!-- https://www.pexels.com/photo-license/ -->
 
-</head>
+    <div class="o-content-width">
+      <ul class="img-list">
+        <li class="img-frame">
+          <div class="img-holder">
+            <img src="img/img1.jpg" alt="" />
+          </div>
+          <div class="personal-info personal-info--received">
+            <p class="personal-info__name">Jenny Doe</p>
+          </div>
+        </li>
+        <li class="img-frame">
+          <div class="img-holder">
+            <img src="img/img2.jpg" alt="" />
+          </div>
+          <div class="personal-info personal-info--received">
+            <p class="personal-info__name">John Doe</p>
+          </div>
+        </li>
+        <li class="img-frame">
+          <div class="img-holder">
+            <img src="img/img3.jpg" alt="" />
+          </div>
+          <div class="personal-info personal-info--received">
+            <p class="personal-info__name">Claire Underwood</p>
+          </div>
+        </li>
+        <li class="img-frame">
+          <div class="img-holder">
+            <img src="img/img4.jpg" alt="" />
+          </div>
+          <div class="personal-info personal-info--received">
+            <p class="personal-info__name">Harry Potter</p>
+          </div>
+        </li>
+        <li class="img-frame">
+          <div class="img-holder">
+            <img src="img/img5.jpg" alt="" />
+          </div>
+          <div class="personal-info personal-info--received">
+            <p class="personal-info__name">Jan Vennegoor of Hesseling</p>
+          </div>
+        </li>
 
-<body>
-	<!-- <h1></h1> -->
-	<!-- all photos under Creative Commons Zero license -->
-	<!-- https://www.pexels.com/photo-license/ -->
+        <li id="clone-src" class="img-frame clone-src" data-dynamic-frame-id="-1">
+          <div class="img-holder img-holder--dynamic">
+            <div id="qr-box" class="qr-box qr-box--not-yet-received">
+              <a href="camera.html" class="qr-link">
+                <div id="qr-code" class="qr-code"></div>
+                <p class="qr-box__cta">Scan QR code to<br />Add your selfie here</p>
+              </a>
+            </div>
+            <div
+              id="captured-img-holder"
+              class="captured-img-holder captured-img-holder--not-yet-received"
+            >
+              <img id="captured-img" class="captured-img" />
+            </div>
+          </div>
+          <div id="personal-info" class="personal-info">
+            <p id="personal-info__name" class="personal-info__name"></p>
+          </div>
+        </li>
+      </ul>
 
-	<div class="o-content-width">
+      <a href="#" id="btn-reset" class="btn--reset">Start over</a>
+    </div>
 
-		<ul class="img-list">
-			<li class="img-frame">
-				<div class="img-holder">
-					<img src="img/img1.jpg" alt="">
-				</div>
-				<div class="personal-info personal-info--received">
-					<p class="personal-info__name">
-						Jenny Doe
-					</p>
-				</div>
-			</li>
-			<li class="img-frame">
-				<div class="img-holder">
-					<img src="img/img2.jpg" alt="">
-				</div>
-				<div class="personal-info personal-info--received">
-					<p class="personal-info__name">
-						John Doe
-					</p>
-				</div>
-			</li>
-			<li class="img-frame">
-				<div class="img-holder">
-					<img src="img/img3.jpg" alt="">
-				</div>
-				<div class="personal-info personal-info--received">
-					<p class="personal-info__name">
-						Claire Underwood
-					</p>
-				</div>
-			</li>
-			<li class="img-frame">
-				<div class="img-holder">
-					<img src="img/img4.jpg" alt="">
-				</div>
-				<div class="personal-info personal-info--received">
-					<p class="personal-info__name">
-						Harry Potter
-					</p>
-				</div>
-			</li>
-			<li class="img-frame">
-				<div class="img-holder">
-					<img src="img/img5.jpg" alt="">
-				</div>
-				<div class="personal-info personal-info--received">
-					<p class="personal-info__name">
-						Jan Vennegoor of Hesseling
-					</p>
-				</div>
-			</li>
+    <!-- Socket.io library -->
+    <script src="/socket.io/socket.io.js"></script>
 
+    <!-- Main JavaScript file -->
+    <script type="module" src="js/gallery.js"></script>
+    <script type="module" src="js/add-qr-code.js"></script>
 
-			<li id="clone-src" class="img-frame clone-src" data-dynamic-frame-id="-1">
-				<div class="img-holder img-holder--dynamic">
-					<div id="qr-box" class="qr-box qr-box--not-yet-received">
-						<a href="camera.html" class="qr-link">
-							<div id="qr-code" class="qr-code"></div>
-							<p class="qr-box__cta">
-								Scan QR code to<br />Add your selfie here
-							</p>
-						</a>
-					</div>
-					<div id="captured-img-holder" class="captured-img-holder captured-img-holder--not-yet-received">
-						<img src="" id="captured-img" class="captured-img">
-					</div>
-				</div>
-				<div id="personal-info" class="personal-info">
-					<p id="personal-info__name" class="personal-info__name"></p>
-				</div>
-			</li>
-		</ul>
-
-		<a href="#" id="btn-reset" class="btn--reset">Start over</a>
-
-	</div>
-
-
-
-	<!-- Socket.io library -->
-	<script src="/socket.io/socket.io.js"></script>
-
-	<!-- Main JavaScript file -->
-	<script type="module" src="js/gallery.js"></script>
-	<script type="module" src="js/add-qr-code.js"></script>
-
-	<!-- add socket - anything that needs connectionready event should be added before this -->
-	<script type="module" src="js/socket.js"></script>
-
-</body>
-
+    <!-- add socket - anything that needs connectionready event should be added before this -->
+    <script type="module" src="js/socket.js"></script>
+  </body>
 </html>
