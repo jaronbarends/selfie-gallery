@@ -1,218 +1,196 @@
-;(function() {
-	
-	
-	const btnArea = document.getElementById('btn-area');
-	const personalInfo = document.getElementById('personal-info');
-	const imageLoadedClass = 'body--image-is-loaded';
+const btnArea = document.getElementById('btn-area');
+const personalInfo = document.getElementById('personal-info');
+const imageLoadedClass = 'body--image-is-loaded';
 
-	const log = function(msg) {
-		var win = document.getElementById('log'),
-			h = win.innerHTML;
+const log = function (msg) {
+  const win = document.getElementById('log');
+  if (!win) {
+    return;
+  }
+  let h = win.innerHTML;
 
-		h += msg + '<br>';
-		win.innerHTML = h;
-	}
-	
+  h += msg + '<br>';
+  win.innerHTML = h;
+};
 
+/**
+ * convert the input image to data-url
+ * @returns {undefined}
+ */
+const processImageFromFile = function (e) {
+  const files = e.target.files;
+  if (files && files[0]) {
+    var reader = new FileReader();
 
-	/**
-	* convert the input image to data-url
-	* @returns {undefined}
-	*/
-	const processImageFromFile = function(e) {
-		const files = e.target.files;
-		if (files && files[0]) {
-			var reader = new FileReader();
+    const capturedImg = document.getElementById('captured-img');
 
-			const capturedImg = document.getElementById('captured-img');
-			capturedImg.addEventListener('load', console.log('loaded capturedImg'));
+    reader.onload = function (e) {
+      const imgData = e.target.result;
+      capturedImg.setAttribute('src', imgData);
 
-			reader.onload = function (e) {
-				const imgData = e.target.result;
-					capturedImg.setAttribute('src', imgData);
+      // we need timeout to make sure img is loaded
+      setTimeout(() => {
+        imageReadyHandler(imgData);
+      }, 500);
+    };
 
-				// we need timeout to make sure img is loaded
-				setTimeout(() => {
-					imageReadyHandler(imgData);
-				}, 500);
-			}
+    reader.readAsDataURL(files[0]); // this will trigger onload event when img data is parsed
+  }
+};
 
-			reader.readAsDataURL(files[0]);// this will trigger onload event when img data is parsed
+/**
+ * handle processed image
+ * @returns {undefined}
+ */
+const processImageHandler = function (img, metaData) {
+  const capturedImg = document.getElementById('captured-img');
+  let imgData = img.src;
 
-		}
-	};
-	
+  if (img.tagName.toLowerCase() === 'canvas') {
+    imgData = img.toDataURL('image/png');
+    capturedImg.src = imgData;
+  }
+  imageReadyHandler(imgData);
+};
 
-	/**
-	* handle processed image
-	* @returns {undefined}
-	*/
-	const processImageHandler = function(img, metaData) {
-			const capturedImg = document.getElementById('captured-img');
-			let imgData = img.src;
-			// console.log(img.tagName);
+/**
+ * process the uploaded image with loadImage
+ * @returns {undefined}
+ */
+const processImageFromCamera = function (e) {
+  const file = e.target.files[0],
+    callback = processImageHandler,
+    options = {
+      maxWidth: 200,
+      orientation: 1,
+      // orientation: true,
+      // meta: true,
+      // canvas: false
+    };
 
-			if (img.tagName.toLowerCase() === 'canvas') {
-				imgData = img.toDataURL("image/png");
-				// console.log(imgData);
-				capturedImg.src = imgData;
-			}
-			// console.log(metaData);
-			imageReadyHandler(imgData);
-	};
-	
+  //https://github.com/blueimp/JavaScript-Load-Image
+  // somehow, the old 2019 version works; the new 2023 version does not show image
+  // haven't really investigated, just reverted to old version
+  loadImage(file, callback, options);
+};
 
-	/**
-	* process the uploaded image with loadImage
-	* @returns {undefined}
-	*/
-	const processImageFromCamera = function(e) {
-		const file = e.target.files[0],
-			callback = processImageHandler,
-			options = {
-				maxWidth: 200,
-				orientation: 1,
-				// orientation: true,
-				// meta: true,
-				// canvas: false
-			};
+/**
+ * hide the capture button
+ * @returns {undefined}
+ */
+const hideBtnArea = function () {
+  btnArea.classList.add('btn-area--is-hidden');
+};
 
-		//https://github.com/blueimp/JavaScript-Load-Image
-		// somehow, the old 2019 version works; the new 2023 version does not show image
-		// haven't really investigated, just reverted to old version
-		loadImage(file, callback, options);
-	};
+/**
+ * show the capture button
+ * @returns {undefined}
+ */
+const showBtnArea = function () {
+  btnArea.classList.remove('btn-area--is-hidden');
+};
 
-	
+/**
+ *
+ * @returns {undefined}
+ */
+const hidepersonalInfo = function () {
+  personalInfo.classList.add('personal-info--is-hidden');
+};
 
-	/**
-	* hide the capture button
-	* @returns {undefined}
-	*/
-	const hideBtnArea = function() {
-		btnArea.classList.add('btn-area--is-hidden');
-	};
+/**
+ * handle new image from camera or file
+ * @returns {undefined}
+ */
+const newImageHandler = function (e, source) {
+  hideBtnArea();
+  hidepersonalInfo();
 
+  if (source === 'camera') {
+    processImageFromCamera(e);
+  } else if (source === 'file') {
+    processImageFromFile(e);
+  }
+};
 
-	/**
-	* show the capture button
-	* @returns {undefined}
-	*/
-	const showBtnArea = function() {
-		btnArea.classList.remove('btn-area--is-hidden');
-	};
+/**
+ * handle newly captured image
+ * @returns {undefined}
+ */
+const newImageFromFileHandler = function (e) {
+  newImageHandler(e, 'file');
+};
 
+/**
+ * handle newly captured image
+ * @returns {undefined}
+ */
+const newImageFromCameraHandler = function (e) {
+  newImageHandler(e, 'camera');
+};
 
-	/**
-	* 
-	* @returns {undefined}
-	*/
-	const hidepersonalInfo = function() {
-		personalInfo.classList.add('personal-info--is-hidden');
-	};
+/**
+ * add classes when image is loaded
+ * @returns {undefined}
+ */
+const imageReadyHandler = function (imgData) {
+  document.body.classList.add(imageLoadedClass);
 
-	/**
-	* handle new image from camera or file
-	* @returns {undefined}
-	*/
-	const newImageHandler = function(e, source) {
-		hideBtnArea();
-		hidepersonalInfo();
+  // make body trigger event so other scripts on this page can listen for it
+  const newimagedataEvent = new CustomEvent('newimagedata', {
+    detail: {
+      imgData,
+      name: document.getElementById('name').value,
+    },
+  });
+  document.body.dispatchEvent(newimagedataEvent);
+};
 
-		if (source === 'camera') {
-			processImageFromCamera(e);
-		} else if (source === 'file') {
-			processImageFromFile(e);
-		}
-	};
-	
+/**
+ * handle removal of image in gallery - show capture button again
+ * @returns {undefined}
+ */
+const removeImageHandler = function () {
+  showBtnArea();
+  document.body.classList.add(imageLoadedClass);
+};
 
+/**
+ * make submit of form open camera
+ * @returns {undefined}
+ */
+const submitHandler = function (e) {
+  e.preventDefault();
+  document.getElementById('file-input-camera').click();
+};
 
+/**
+ * kick off the app once the socket connection is ready
+ * @param {Socket} socket This client's socket
+ * @returns {undefined}
+ */
+var connectionReadyHandler = function (socket) {
+  if (socket) {
+    document
+      .getElementById('file-input-desktop')
+      .addEventListener('change', newImageFromFileHandler);
+    document
+      .getElementById('file-input-camera')
+      .addEventListener('change', newImageFromCameraHandler);
+    socket.on('removeimage', removeImageHandler);
+    document.getElementById('image-form').addEventListener('submit', submitHandler);
+  }
+};
 
-	/**
-	* handle newly captured image
-	* @returns {undefined}
-	*/
-	const newImageFromFileHandler = function(e) {
-		newImageHandler(e, 'file');
-	};
-	
-	
-	/**
-	 * handle newly captured image
-	 * @returns {undefined}
-	 */
-	const newImageFromCameraHandler = function(e) {
-		newImageHandler(e, 'camera');
-	};
+/**
+ * initialize all
+ * @returns {undefined}
+ */
+const init = function () {
+  // $(document).on('connectionready.socket', connectionReadyHandler);
+  document.addEventListener('connectionready.socket', (e) => {
+    connectionReadyHandler(e.detail);
+  });
+};
 
-
-	/**
-	* add classes when image is loaded
-	* @returns {undefined}
-	*/
-	const imageReadyHandler = function(imgData) {
-		document.body.classList.add(imageLoadedClass);
-
-		// make body trigger event so other scripts on this page can listen for it
-		const newimagedataEvent = new CustomEvent('newimagedata', {
-			detail: {
-				imgData,
-				name: document.getElementById('name').value,
-			}
-		});
-		document.body.dispatchEvent(newimagedataEvent);
-	};
-	
-
-
-	/**
-	* handle removal of image in gallery - show capture button again
-	* @returns {undefined}
-	*/
-	const removeImageHandler = function() {
-		showBtnArea();
-		document.body.classList.add(imageLoadedClass);
-	};
-
-
-	/**
-	* make submit of form open camera
-	* @returns {undefined}
-	*/
-	const submitHandler = function(e) {
-		console.log('submit');
-		e.preventDefault();
-		document.getElementById('file-input-camera').click();
-	};
-	
-	
-
-	/**
-	* kick off the app once the socket connection is ready
-	* @param {event} e The ready.socket event sent by socket js
-	* @param {Socket} socket This client's socket
-	* @returns {undefined}
-	*/
-	var connectionReadyHandler = function(e, io) {
-		if (io) {
-			document.getElementById('file-input-desktop').addEventListener('change', newImageFromFileHandler);
-			document.getElementById('file-input-camera').addEventListener('change', newImageFromCameraHandler);
-			io.on('removeimage', removeImageHandler);
-			document.getElementById('image-form').addEventListener('submit', submitHandler);
-		}
-	};
-
-	/**
-	* initialize all
-	* @returns {undefined}
-	*/
-	const init = function() {
-		$(document).on('connectionready.socket', connectionReadyHandler);
-
-	};
-
-	document.addEventListener('DOMContentLoaded', init);
-
-
-})();
+document.addEventListener('DOMContentLoaded', init);

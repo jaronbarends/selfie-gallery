@@ -1,387 +1,404 @@
 body {
-	font-size: 1.6rem;
+  overflow: hidden; /* ensure body won't move under swipe */
+  font-size: 1.6rem;
 }
 
-.body--image-is-loaded {}
-
 :root {
-	--br: 5px;/* border-radius */
-	--input-w: 11em;
-	--input-h: 3.5em;
+  --br: 5px; /* border-radius */
+  --input-w: 11em;
+  --input-h: 3.5em;
 }
 
 .o-content-width {
-	width: 375px;
-	height: 550px;
-	/* border: 1px dashed; */
+  width: 375px;
+  height: 550px;
+  /* border: 1px dashed; */
 }
 
 .img-area,
 .swipe-area {
-	padding: 20px;
-	/*iphone dimensions*/
-	width: 188px;
-	/* height: 151px; */
-	transition: height 0.3s ease-in-out;
+  padding: 20px;
+  /*iphone dimensions*/
+  width: 188px;
+  /* height: 151px; */
+  transition: height 0.3s ease-in-out;
 }
 
 .img-area {
-	position: relative;
-	margin: 1em auto 0;
+  position: relative;
+  margin: 1em auto 0;
 }
 
 .body--image-is-loaded .img-area,
 .body--image-is-loaded .swipe-area {
-	height: 251px;
+  height: 251px;
 }
 
 .swipe-area {
-	margin: -20px -20px 0;
-	/* border: 5px dotted rgba(255, 255, 255, 0.4);
-	border-radius: var(--br);
-	transition: border-color 0.5s; */
+  position: relative;
+  margin: -20px -20px 0;
+
+  &::after {
+    content: '✓';
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    bottom: 10px;
+    left: 10px;
+    background: green;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    scale: 0;
+    transition: scale 0.15s ease-in-out;
+  }
+}
+
+.swipe-area.js-swiped--will-open::after {
+  scale: 1;
 }
 
 .body--image-is-loaded .swipe-area {
-	border-color: transparent;
+  border-color: transparent;
 }
 
 .captured-img {
-	display: block;
-	width: 100%;
-	height: auto;
-	opacity: 0;
-	transition: opacity 0.3s;
-	image-orientation: from-image;
+  display: block;
+  width: 100%;
+  height: auto;
+  opacity: 0;
+  transition: opacity 0.3s;
+  image-orientation: from-image;
 }
 
 .body--image-is-loaded .swipe-area .captured-img {
-	box-shadow: 4px 4px 5px 4px rgba(0,0,0, 0.4);
-	opacity: 1;
+  box-shadow: 4px 4px 5px 4px rgba(0, 0, 0, 0.4);
+  opacity: 1;
 }
-
 
 /*-- Start swipe indicator --*/
 
-	:root {
-		--timing: 2s 3 forwards;
-	}
+:root {
+  --timing: 2s 3 forwards;
+}
 
-	@keyframes swipe-hand-anim {
-		0% {
-			opacity: 0;
-			transform: rotate(-50deg) scale(1.4) ;
-		}
-		10% {
-			opacity: 1;
-		}
-		20%,
-		30% {
-			opacity: 1;
-			transform: rotate(-50deg);
-		}
-		70%,
-		80% {
-			opacity: 0.6;
-			transform: translate3d(0, -400px, 0) rotate(-50deg);
-		}
-		100% {
-			opacity: 0;
-			transform: translate3d(0, -400px, 0) rotate(-50deg) scale(1.4);
-		}
+@keyframes swipe-hand-anim {
+  0% {
+    opacity: 0;
+    transform: rotate(-50deg) scale(1.4);
+  }
+  10% {
+    opacity: 1;
+  }
+  20%,
+  30% {
+    opacity: 1;
+    transform: rotate(-50deg);
+  }
+  70%,
+  80% {
+    opacity: 0.6;
+    transform: translate3d(0, -400px, 0) rotate(-50deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(0, -400px, 0) rotate(-50deg) scale(1.4);
+  }
+}
 
-	}
+@keyframes circle-anim {
+  0%,
+  10% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  30% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  70%,
+  80% {
+    opacity: 1;
+    transform: translate3d(0, -400px, 0);
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(0, -400px, 0);
+  }
+}
 
-	@keyframes circle-anim {
-		0%,
-		10% {
-			opacity: 0;
-			transform: scale(0);
-		}
-		30% {
-			opacity: 1;
-			transform: scale(1);
-		}
-		70%,
-		80% {
-			opacity: 1;
-			transform: translate3d(0, -400px, 0);
-		}
-		100% {
-			opacity: 0;
-			transform: translate3d(0, -400px, 0);
-		}
-	}
+@keyframes arrow-anim {
+  0%,
+  30% {
+    transform: none;
+  }
+  50%,
+  100% {
+    transform: translate3d(0, -60%, 0);
+  }
+}
 
-	@keyframes arrow-anim {
-		0%,
-		30% {
-			transform: none;
-		}
-		50%,
-		100% {
-			transform: translate3d(0, -60%, 0);
-		}
-	}
+@keyframes arrow-head-anim {
+  0%,
+  20% {
+    opacity: 0;
+  }
+  30%,
+  40% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
 
-	@keyframes arrow-head-anim {
-		0%,
-		20% {
-			opacity: 0;
-		}
-		30%,
-		40% {
-			opacity: 1;
-		}
-		50%,
-		100% {
-			opacity: 0;
-		}
-	}
+@keyframes arrow-line-anim {
+  0%,
+  20% {
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+    transform: none;
+  }
+  50% {
+    transform: scale3d(1, 0, 1);
+  }
+  100% {
+    opacity: 1;
+    transform: scale3d(1, 0, 1);
+  }
+}
 
-	@keyframes arrow-line-anim {
-		0%,
-		20% {
-			opacity: 0;
-		}
-		30% {
-			opacity: 1;
-			transform: none;
-		}
-		50% {
-			transform: scale3d(1, 0, 1);
-		}
-		100% {
-			opacity: 1;
-			transform: scale3d(1, 0, 1);
-		}
-	}
+.swipe-indicator {
+  position: absolute;
+  display: block;
+  top: 240px;
+  left: 50%;
+  border-radius: 20px;
+  pointer-events: none;
+  opacity: 0;
+}
 
-	.swipe-indicator {
-		position: absolute;
-		display: block;
-		top: 240px;
-		left: 50%;
-		border-radius: 20px;
-		pointer-events: none;
-		opacity: 0;
-	}
+.swipe-indicator::after {
+  /* circle */
+  position: absolute;
+  content: '';
+  display: block;
+  color: rgba(255, 255, 255, 0.4);
+  background: currentColor;
+  --r: 20px;
+  top: calc(-1 * var(--r));
+  left: calc(-1 * var(--r));
+  width: calc(2 * var(--r));
+  height: calc(2 * var(--r));
+  border-radius: 50%;
+}
 
-	.swipe-indicator::after {
-		/* circle */
-		position: absolute;
-		content: '';
-		display: block;
-		color: rgba(255, 255, 255, 0.4);
-		background: currentColor;
-		--r: 20px;
-		top: calc(-1 * var(--r));
-		left: calc(-1 * var(--r));
-		width: calc(2 * var(--r));
-		height: calc(2 * var(--r));
-		border-radius: 50%;
-	}
+.swipe-arrow {
+  position: absolute;
+  height: 150px;
+  top: -170px;
+  color: white;
+}
 
-	.swipe-arrow {
-		position: absolute;
-		height: 150px;
-		top: -170px;
-		color: white;
-	}
+.swipe-arrow::before,
+.swipe-arrow::after {
+  position: absolute;
+  content: '';
+  display: block;
+  left: -2px;
+  width: 0;
+  height: calc(100% - 10px);
+  border-right: 4px solid;
+  color: rgba(255, 255, 255, 0.4);
+}
 
-	.swipe-arrow::before,
-	.swipe-arrow::after {
-		position: absolute;
-		content: '';
-		display: block;
-		left: -2px;
-		width: 0;
-		height: calc(100% - 10px);
-		border-right: 4px solid;
-		color: rgba(255, 255, 255, 0.4);
-	}
+.swipe-arrow::before {
+  /* arrrow line */
+  background: currentColor;
+  transform-origin: top center;
+}
 
-	.swipe-arrow::before {
-		/* arrrow line */
-		background: currentColor;
-		transform-origin: top center;
-	}
+.swipe-arrow::after {
+  /* arrow head */
+  width: 0;
+  height: 0;
+  top: -34px;
+  left: -10px;
+  border: 10px solid transparent;
+  border-bottom: 24px solid white;
+}
 
-	.swipe-arrow::after {
-		/* arrow head */
-		width: 0;
-		height: 0;
-		top: -34px;
-		left: -10px;
-		border: 10px solid transparent;
-		border-bottom: 24px solid white
-	}
+.swipe-indicator--is-active {
+  opacity: 1;
+}
 
-	.swipe-indicator--is-active {
-		opacity: 1;
-	}
+.swipe-hand {
+  position: absolute;
+  display: block;
+  top: -7px;
+  left: -28px;
+  z-index: 1;
+  width: 80px;
+  height: auto;
+  transform-origin: 35% 7%;
+  transform: rotate(-50deg);
+  opacity: 0;
+}
 
-	.swipe-hand {
-		position: absolute;
-		display: block;
-		top: -7px;
-		left: -28px;
-		z-index: 1;
-		width: 80px;
-		height: auto;
-		transform-origin: 35% 7%;
-		transform: rotate(-50deg);
-		opacity: 0;
-	}
-
-	.swipe-indicator--is-active::after {
-		animation: circle-anim var(--timing);
-	}
-	.swipe-indicator--is-active .swipe-hand {
-		animation: swipe-hand-anim var(--timing);
-	}
-	.swipe-indicator--is-active .swipe-arrow {
-		animation: arrow-anim var(--timing);
-	}
-	.swipe-indicator--is-active .swipe-arrow::before {
-		animation: arrow-line-anim var(--timing);
-	}
-	.swipe-indicator--is-active .swipe-arrow::after {
-		animation: arrow-head-anim var(--timing);
-	}
+.swipe-indicator--is-active::after {
+  animation: circle-anim var(--timing);
+}
+.swipe-indicator--is-active .swipe-hand {
+  animation: swipe-hand-anim var(--timing);
+}
+.swipe-indicator--is-active .swipe-arrow {
+  animation: arrow-anim var(--timing);
+}
+.swipe-indicator--is-active .swipe-arrow::before {
+  animation: arrow-line-anim var(--timing);
+}
+.swipe-indicator--is-active .swipe-arrow::after {
+  animation: arrow-head-anim var(--timing);
+}
 
 /*-- End swipe indicator --*/
 
 /*-- Start instruction --*/
 
-	.instruction-area {
-		display: none;
-		margin: 40px auto 0;
-		max-width: 15em;
-		border-radius: var(--br);
-		padding: 1em;
-		background: white;
-		text-align: center;
-		/* opacity: 0; */
-		transition: opacity 0.3s;
-	}
+.instruction-area {
+  display: none;
+  margin: 40px auto 0;
+  max-width: 15em;
+  border-radius: var(--br);
+  padding: 1em;
+  background: white;
+  text-align: center;
+  /* opacity: 0; */
+  transition: opacity 0.3s;
+}
 
-	.instruction-area--is-active {
-		opacity: 1;
-		display: block;
-	}
+.instruction-area--is-active {
+  opacity: 1;
+  display: block;
+}
 
 /*-- End instruction --*/
 
 .btn-area {
-	position: relative;
-	margin: 0 auto;
-	text-align: center;
-	color: white;
-	transition: opacity 0.3s;
+  position: relative;
+  margin: 0 auto;
+  text-align: center;
+  color: white;
+  transition: opacity 0.3s;
 }
 
 .btn-area--is-hidden {
-	opacity: 0;
-	pointer-events: none;
+  opacity: 0;
+  pointer-events: none;
 }
 
 .btn,
 .file-input {
-	/* margin-top: 1em; */
-	width: var(--input-w);
-	height: var(--input-h);
+  /* margin-top: 1em; */
+  width: var(--input-w);
+  height: var(--input-h);
 }
 
-
 .btn {
-	box-sizing: border-box;
-	position: absolute;
-	display: inline-flex;
-	justify-content: center;
-	align-items: center;
-	top: 0;
-	left: 50%;
-	transform: translateX(-50%);
-	border-radius: var(--br);
-	background: rgba(0, 0, 0, 0.3);
-	color: #fff;
+  box-sizing: border-box;
+  position: absolute;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: var(--br);
+  background: rgba(0, 0, 0, 0.3);
+  color: #fff;
 }
 
 .btn--capture {
-	pointer-events: none;
+  pointer-events: none;
 }
 
 .btn--remove {
-	top: 320px;
-	transform: opacity 0.3s;
+  top: 320px;
+  transform: opacity 0.3s;
 }
 
 .btn--is-hidden {
-	opacity: 0;
-	pointer-events: none;
+  opacity: 0;
+  pointer-events: none;
 }
 
 .icon {
-	width: 32px;
-	margin-right: 10px;
+  width: 32px;
+  margin-right: 10px;
 }
 
 .file-input {
-	cursor: pointer;
+  cursor: pointer;
 }
 
 .file-input--hidden {
-	/* hidden input field - camera button placed over it */
-	display: inline-block;
-	opacity: 0;
+  /* hidden input field - camera button placed over it */
+  display: inline-block;
+  opacity: 0;
 }
 
 .personal-info {
-	margin: 0 auto;
-	width: var(--input-w);
+  margin: 0 auto;
+  width: var(--input-w);
 }
 
 .personal-info--is-hidden {
-	display: none;
+  display: none;
 }
 
 .o-form-row {
-	margin-bottom: 2em;
+  margin-bottom: 2em;
 }
 
 label,
-input[type="text"] {
-	box-sizing: border-box;
-	display: block;
-	padding: 0 1rem;
-	width: 100%;
+input[type='text'] {
+  box-sizing: border-box;
+  display: block;
+  padding: 0 1rem;
+  width: 100%;
 }
 
 label {
-	font-size: 1.2rem;
-	transform: translateY(1.8em);
+  font-size: 1.2rem;
+  transform: translateY(1.8em);
 }
 
-input[type="text"] {
-	padding-top: 0.8em;
-	border: 0;
-	border-radius: var(--br);
-	height: var(--input-h);
-	background: white;
+input[type='text'] {
+  padding-top: 0.8em;
+  border: 0;
+  border-radius: var(--br);
+  height: var(--input-h);
+  background: white;
 }
 
-input[type="text"]:placeholder-shown {
-	border-bottom-color: currentColor;
+input[type='text']:placeholder-shown {
+  border-bottom-color: currentColor;
 }
 
-input[type="submit"] {
-	/* submit button needs to be present in order for submithandler to work *
+input[type='submit'] {
+  /* submit button needs to be present in order for submithandler to work *
 	/* but we don't want to see it */
-	position: absolute;
-	transform: translateX(-10000px);
+  position: absolute;
+  transform: translateX(-10000px);
 }
 
 .desktop-debug {
-	display: none;
+  display: none;
 }

@@ -7,7 +7,7 @@
 
 	<title>Selfie Gallery</title>
 
-	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="mobile-web-app-capable" content="yes">
 	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
 	<meta name="viewport"
@@ -105,18 +105,15 @@
 
 
 
-	<!-- Including the JS libraries that we use -->
-	<script src="//code.jquery.com/jquery-2.1.3.min.js"></script>
-
 	<!-- Socket.io library -->
 	<script src="/socket.io/socket.io.js"></script>
 
 	<!-- Main JavaScript file -->
-	<script src="js/gallery.js"></script>
-	<script src="js/add-qr-code.js"></script>
+	<script type="module" src="js/gallery.js"></script>
+	<script type="module" src="js/add-qr-code.js"></script>
 
 	<!-- add socket - anything that needs connectionready event should be added before this -->
-	<script src="js/socket.js"></script>
+	<script type="module" src="js/socket.js"></script>
 
 </body>
 
