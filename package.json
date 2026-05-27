@@ -11,7 +11,8 @@
   },
   "scripts": {
     "preinstall": "npm install --save socket.io --msvs_version=2013",
-    "start": "node socket-server.js"
+    "start": "node socket-server.js",
+    "ngrok": "ngrok http 3000"
   },
   "devDependencies": {
     "@flydotio/dockerfile": "^0.7.10"

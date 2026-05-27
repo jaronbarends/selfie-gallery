@@ -143,13 +143,13 @@ const removeDynamicFrame = function() {
 * add event listeners for socket
 * @returns {undefined}
 */
-var initSocketListeners = function() {
-	io.on('imagedatatransfer', imageDataTransferHandler);
-	io.on('imagetransfer', imageTransferHandler);
-	io.on('swipemove', handleSwipe);
-	io.on('removeimage', removeImageHandler);
+var initSocketListeners = function(socket) {
+	socket.on('imagedatatransfer', imageDataTransferHandler);
+	socket.on('imagetransfer', imageTransferHandler);
+	socket.on('swipemove', handleSwipe);
+	socket.on('removeimage', removeImageHandler);
 
-	io.on('meta', (e) => {
+	socket.on('meta', (e) => {
 		console.log(e)
 	});
 };
@@ -160,13 +160,13 @@ var initSocketListeners = function() {
 * send event to server to request entry to room
 * @returns {undefined}
 */
-var joinRoom = function() {
+var joinRoom = function(socket) {
 	var data = {
-			id: io.id,
+			id: socket.id,
 		};
 
 	//tell socket we want to join the session
-	io.emit('join', data);
+	socket.emit('join', data);
 };
 
 
@@ -175,9 +175,9 @@ var joinRoom = function() {
 * @param {string} varname Description
 * @returns {undefined}
 */
-var initHub = function() {
-	initSocketListeners();
-	joinRoom();
+var initHub = function(socket) {
+	initSocketListeners(socket);
+	joinRoom(socket);
 	addDynamicFrame();
 };
 
@@ -188,9 +188,9 @@ var initHub = function() {
 * @param {Socket} socket This client's socket
 * @returns {undefined}
 */
-var connectionReadyHandler = function(io) {
-	if (io) {
-		initHub();
+var connectionReadyHandler = function(socket) {
+	if (socket) {
+		initHub(socket);
 	}
 };
 
